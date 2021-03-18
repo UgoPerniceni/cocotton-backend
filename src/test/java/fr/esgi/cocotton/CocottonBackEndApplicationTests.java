@@ -1,4 +1,4 @@
-package fr.esgi.cocottonbackend;
+package fr.esgi.cocotton;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

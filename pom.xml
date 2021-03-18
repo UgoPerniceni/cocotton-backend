@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.esgi</groupId>
-	<artifactId>cocotton-back-end</artifactId>
+	<artifactId>cocotton-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cocotton-back-end</name>
+	<name>cocotton-backend</name>
 	<description>Cocotton Back-end with Spring boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -19,7 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
