@@ -1,7 +1,7 @@
 package fr.esgi.cocotton.application.ingredient;
 
-import fr.esgi.cocotton.domain.ingredient.Ingredient;
-import fr.esgi.cocotton.domain.ingredient.IngredientDao;
+import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
+import fr.esgi.cocotton.domain.models.ingredient.IngredientDao;
 import fr.esgi.cocotton.infrastructure.common.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

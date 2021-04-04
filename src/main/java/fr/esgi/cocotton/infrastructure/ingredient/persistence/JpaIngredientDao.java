@@ -1,7 +1,7 @@
 package fr.esgi.cocotton.infrastructure.ingredient.persistence;
 
-import fr.esgi.cocotton.domain.ingredient.Ingredient;
-import fr.esgi.cocotton.domain.ingredient.IngredientDao;
+import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
+import fr.esgi.cocotton.domain.models.ingredient.IngredientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

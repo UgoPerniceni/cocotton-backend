@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.domain.category;
+package fr.esgi.cocotton.domain.enums.category;
 
 public enum Category {
     VEGETABLE,

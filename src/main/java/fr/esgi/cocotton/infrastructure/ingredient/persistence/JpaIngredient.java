@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.infrastructure.ingredient.persistence;
 
-import fr.esgi.cocotton.domain.category.Category;
+import fr.esgi.cocotton.domain.enums.category.Category;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Id;
