@@ -2,18 +2,23 @@ package fr.esgi.cocotton.application.ingredient;
 
 import fr.esgi.cocotton.domain.ingredient.Ingredient;
 import fr.esgi.cocotton.domain.ingredient.IngredientDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class Add {
+public class FindAllIngredients {
 
     private final IngredientDao ingredientDao;
 
-    public Add(IngredientDao ingredientDao){
+    @Autowired
+    public FindAllIngredients(IngredientDao ingredientDao){
         this.ingredientDao = ingredientDao;
     }
 
-    public String execute(Ingredient ingredient) {
-        return ingredientDao.save(ingredient);
+    public List<Ingredient> execute(){
+        return ingredientDao.findAll();
     }
+
 }

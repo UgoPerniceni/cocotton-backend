@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindById {
+public class FindIngredientById {
 
     private final IngredientDao ingredientDao;
 
     @Autowired
-    public FindById(IngredientDao ingredientDao){
+    public FindIngredientById(IngredientDao ingredientDao){
         this.ingredientDao = ingredientDao;
     }
 
