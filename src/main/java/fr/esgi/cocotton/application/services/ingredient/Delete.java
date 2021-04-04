@@ -1,6 +1,6 @@
-package fr.esgi.cocotton.application.ingredient;
+package fr.esgi.cocotton.application.services.ingredient;
 
-import fr.esgi.cocotton.domain.ingredient.IngredientDao;
+import fr.esgi.cocotton.domain.models.ingredient.IngredientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package fr.esgi.cocotton.domain.ingredient;
+package fr.esgi.cocotton.domain.models.ingredient;
 
-import fr.esgi.cocotton.domain.category.Category;
+import fr.esgi.cocotton.domain.enums.category.Category;
 
 public class Ingredient {
 

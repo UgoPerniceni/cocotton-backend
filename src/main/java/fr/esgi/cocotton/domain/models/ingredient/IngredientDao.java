@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.domain.ingredient;
+package fr.esgi.cocotton.domain.models.ingredient;
 
 import java.util.List;
 import java.util.Optional;

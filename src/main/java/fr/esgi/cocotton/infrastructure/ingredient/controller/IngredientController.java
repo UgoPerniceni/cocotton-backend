@@ -1,10 +1,10 @@
 package fr.esgi.cocotton.infrastructure.ingredient.controller;
 
-import fr.esgi.cocotton.application.ingredient.Add;
-import fr.esgi.cocotton.application.ingredient.Delete;
-import fr.esgi.cocotton.application.ingredient.FindAll;
-import fr.esgi.cocotton.application.ingredient.FindById;
-import fr.esgi.cocotton.domain.ingredient.Ingredient;
+import fr.esgi.cocotton.application.services.ingredient.Add;
+import fr.esgi.cocotton.application.services.ingredient.Delete;
+import fr.esgi.cocotton.application.services.ingredient.FindAll;
+import fr.esgi.cocotton.application.services.ingredient.FindById;
+import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
