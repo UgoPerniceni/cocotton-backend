@@ -4,7 +4,7 @@ import fr.esgi.cocotton.application.ingredient.AddIngredient;
 import fr.esgi.cocotton.application.ingredient.DeleteIngredient;
 import fr.esgi.cocotton.application.ingredient.FindAllIngredients;
 import fr.esgi.cocotton.application.ingredient.FindIngredientById;
-import fr.esgi.cocotton.domain.ingredient.Ingredient;
+import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

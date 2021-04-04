@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.application.ingredient;
 
-import fr.esgi.cocotton.domain.ingredient.IngredientDao;
+import fr.esgi.cocotton.domain.models.ingredient.IngredientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 public class DeleteIngredient {
 
     private final IngredientDao ingredientDao;
-    private final FindById findById;
+    private final FindIngredientById findIngredientById;
 
     @Autowired
-    public DeleteIngredient(IngredientDao ingredientDao, FindById findById){
+    public DeleteIngredient(IngredientDao ingredientDao, FindIngredientById findIngredientById){
         this.ingredientDao = ingredientDao;
-        this.findById = findById;
+        this.findIngredientById = findIngredientById;
     }
 
     public void execute(String id){
-        findById.execute(id);
+        findIngredientById.execute(id);
         ingredientDao.deleteById(id);
     }
 }
