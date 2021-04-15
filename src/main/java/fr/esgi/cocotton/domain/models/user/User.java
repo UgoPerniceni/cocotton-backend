@@ -1,6 +1,10 @@
 package fr.esgi.cocotton.domain.models.user;
 
+import fr.esgi.cocotton.domain.models.comment.Comment;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String id;
@@ -10,6 +14,7 @@ public class User {
     private String password;
     private String gender;
     private LocalDate birthDate;
+    private List<Comment> comments;
 
     public User(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate) {
         this.id = id;
@@ -19,6 +24,7 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.birthDate = birthDate;
+        comments = new ArrayList<>();
     }
 
     public String getId() {
@@ -75,5 +81,18 @@ public class User {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void comment(Comment comment){
+        comment.setUser(this);
+        this.getComments().add(comment);
     }
 }
