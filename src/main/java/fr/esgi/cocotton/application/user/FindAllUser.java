@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class FindAllUser {
-
     private final UserDao userDao;
 
     @Autowired
