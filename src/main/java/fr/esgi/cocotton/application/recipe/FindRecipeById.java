@@ -5,8 +5,6 @@ import fr.esgi.cocotton.domain.models.recipe.RecipeDao;
 import fr.esgi.cocotton.infrastructure.common.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class FindRecipeById {
 
