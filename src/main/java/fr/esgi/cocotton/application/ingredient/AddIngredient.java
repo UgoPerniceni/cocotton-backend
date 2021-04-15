@@ -5,7 +5,7 @@ import fr.esgi.cocotton.domain.models.ingredient.IngredientDao;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AddIngredient {
+public class AddIngredient implements AddIngredientUseCase {
 
     private final IngredientDao ingredientDao;
 
@@ -13,7 +13,9 @@ public class AddIngredient {
         this.ingredientDao = ingredientDao;
     }
 
-    public String execute(Ingredient ingredient) {
+    public String execute(AddIngredientCommand command) {
+
+        Ingredient ingredient = new Ingredient(command.getName(), command.getCategory());
         return ingredientDao.save(ingredient);
     }
 }

@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.application.services.user;
+package fr.esgi.cocotton.application.user;
 import fr.esgi.cocotton.domain.models.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

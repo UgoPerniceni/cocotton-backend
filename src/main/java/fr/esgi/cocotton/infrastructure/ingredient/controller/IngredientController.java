@@ -1,9 +1,10 @@
 package fr.esgi.cocotton.infrastructure.ingredient.controller;
 
 import fr.esgi.cocotton.application.ingredient.AddIngredient;
-import fr.esgi.cocotton.application.ingredient.DeleteIngredient;
 import fr.esgi.cocotton.application.ingredient.FindAllIngredients;
 import fr.esgi.cocotton.application.ingredient.FindIngredientById;
+import fr.esgi.cocotton.application.ingredient.DeleteIngredient;
+import fr.esgi.cocotton.application.ingredient.AddIngredientUseCase.AddIngredientCommand;
 import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class IngredientController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Ingredient ingredient){
+    public ResponseEntity<?> save(@RequestBody @Valid AddIngredientCommand ingredient){
         String id = addIngredient.execute(ingredient);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

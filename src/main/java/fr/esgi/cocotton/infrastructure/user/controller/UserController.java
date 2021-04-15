@@ -1,9 +1,9 @@
 package fr.esgi.cocotton.infrastructure.user.controller;
 
-import fr.esgi.cocotton.application.services.user.AddUser;
-import fr.esgi.cocotton.application.services.user.DeleteUser;
-import fr.esgi.cocotton.application.services.user.FindAllUser;
-import fr.esgi.cocotton.application.services.user.FindByIdUser;
+import fr.esgi.cocotton.application.user.AddUser;
+import fr.esgi.cocotton.application.user.DeleteUser;
+import fr.esgi.cocotton.application.user.FindAllUser;
+import fr.esgi.cocotton.application.user.FindByIdUser;
 import fr.esgi.cocotton.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.application.services.user;
+package fr.esgi.cocotton.application.user;
 
 import fr.esgi.cocotton.domain.models.user.User;
 import fr.esgi.cocotton.domain.models.user.UserDao;
