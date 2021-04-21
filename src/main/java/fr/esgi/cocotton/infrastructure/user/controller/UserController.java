@@ -41,17 +41,6 @@ public class UserController {
         return new ResponseEntity<>(findByIdUser.execute(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody User user){
-        String id = addUser.execute(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(id)
-                .toUri();
-
-        return ResponseEntity.created(uri).build();
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         deleteUser.execute(id);
