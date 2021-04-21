@@ -47,7 +47,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(httpHeaders,HttpStatus.OK);
     }
 
-    @PostMapping("/sign-in")
+    @PostMapping("/register")
     public ResponseEntity<?> save(@RequestBody User user) {
         String id = addUser.execute(user);
         URI uri = ServletUriComponentsBuilder.fromPath("/api/users")
