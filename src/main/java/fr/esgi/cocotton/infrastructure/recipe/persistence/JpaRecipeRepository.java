@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface JpaRecipeRepository extends JpaRepository<JpaRecipe, Integer> {
     Optional<JpaRecipe> findById(String id);
+
     void deleteById(String id);
+
     List<JpaRecipe> findAllByUser(JpaUser user);
 }
