@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private final long tokenValidity = Duration.ofMinutes(5).getSeconds() * 1000;
+    private final long tokenValidity = Duration.ofHours(72).getSeconds();
     private final byte[] secret;
 
     public TokenProvider(@Value("${security.token.secret}") CharSequence secret){
@@ -31,6 +31,7 @@ public class TokenProvider {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        System.out.println(tokenValidity);
 
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidity);
