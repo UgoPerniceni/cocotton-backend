@@ -1,9 +1,12 @@
 package fr.esgi.cocotton.infrastructure.user.persistance;
 
+import fr.esgi.cocotton.infrastructure.comment.persistence.JpaComment;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "profile")
 public class JpaUser {
@@ -35,15 +38,20 @@ public class JpaUser {
     @Column(nullable = false)
     private LocalDate birthDate;
 
+    @OneToMany
+    List<JpaComment> comments;
+
     public JpaUser(){}
 
-    public JpaUser(String firstName, String lastName, String email, String password, String gender, LocalDate birthDate) {
+    public JpaUser(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.gender = gender;
         this.birthDate = birthDate;
+        this.comments = new ArrayList<>();
     }
 
     public String getId() {
@@ -100,5 +108,13 @@ public class JpaUser {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<JpaComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<JpaComment> comments) {
+        this.comments = comments;
     }
 }
