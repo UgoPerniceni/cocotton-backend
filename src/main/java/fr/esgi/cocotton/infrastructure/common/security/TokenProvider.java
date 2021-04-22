@@ -31,7 +31,6 @@ public class TokenProvider {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        System.out.println(tokenValidity);
 
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidity);

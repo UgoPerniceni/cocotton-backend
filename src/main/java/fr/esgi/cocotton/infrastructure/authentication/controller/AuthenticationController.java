@@ -44,7 +44,7 @@ public class AuthenticationController {
         String token = tokenProvider.createToken(authentication);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-        return new ResponseEntity<>(httpHeaders,HttpStatus.OK);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping("/register")
