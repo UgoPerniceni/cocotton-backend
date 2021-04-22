@@ -4,13 +4,13 @@ import fr.esgi.cocotton.domain.models.recipe.RecipeDao;
 import fr.esgi.cocotton.domain.models.recipe.Recipe;
 import fr.esgi.cocotton.domain.models.user.User;
 import fr.esgi.cocotton.infrastructure.common.exception.ResourceNotFoundException;
-import fr.esgi.cocotton.infrastructure.common.mapper.UserMapper;
 import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
 import fr.esgi.cocotton.infrastructure.user.persistance.JpaUserRepository;
+import fr.esgi.cocotton.infrastructure.common.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
