@@ -21,7 +21,6 @@ public class JpaRecipe {
     @Column(updatable = false, nullable = false)
     private String id;
 
-
     @Column(nullable = false)
     private String name;
 
