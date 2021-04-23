@@ -35,6 +35,11 @@ public class JpaUserDao implements UserDao {
         return jpaUser.map(mapper::toDomain);
     }
 
+    public Optional<User> findByEmail(String email){
+        Optional<JpaUser> jpaUser = repository.findByEmail(email);
+        return jpaUser.map(mapper::toDomain);
+    }
+
     public String save(User user){
         JpaUser jpaUser = mapper.toEntity(user);
         repository.save(jpaUser);
