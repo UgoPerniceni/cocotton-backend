@@ -8,6 +8,8 @@ public interface UserDao {
 
     Optional<User> findById(String id);
 
+    Optional<User> findByEmail(String email);
+
     String save(User user);
 
     void deleteById(String id);
