@@ -15,13 +15,11 @@ import java.util.stream.Collectors;
 @Repository
 public class JpaUserDao implements UserDao {
     private final JpaUserRepository repository;
-    private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
 
     @Autowired
-    public JpaUserDao(JpaUserRepository repository, PasswordEncoder passwordEncoder, UserMapper mapper){
+    public JpaUserDao(JpaUserRepository repository, UserMapper mapper){
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
     }
 
@@ -34,19 +32,11 @@ public class JpaUserDao implements UserDao {
 
     public Optional<User> findById(String id){
         Optional<JpaUser> jpaUser = repository.findById(id);
-        return jpaUser.map(user -> new User(
-                user.getId(), user.getFirstName(),
-                user.getLastName(), user.getEmail(),
-                user.getPassword(), user.getGender(),
-                user.getBirthDate()
-        ));
+        return jpaUser.map(mapper::toDomain);
     }
 
     public String save(User user){
-        JpaUser jpaUser = new JpaUser( user.getId(),
-                user.getFirstName(), user.getLastName(),
-                user.getEmail(), passwordEncoder.encode(user.getPassword()),
-                user.getGender(), user.getBirthDate());
+        JpaUser jpaUser = mapper.toEntity(user);
         repository.save(jpaUser);
 
         return jpaUser.getId();
