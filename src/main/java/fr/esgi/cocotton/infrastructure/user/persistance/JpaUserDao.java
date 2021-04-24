@@ -4,7 +4,6 @@ import fr.esgi.cocotton.domain.models.user.User;
 import fr.esgi.cocotton.domain.models.user.UserDao;
 import fr.esgi.cocotton.infrastructure.common.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -32,6 +31,11 @@ public class JpaUserDao implements UserDao {
 
     public Optional<User> findById(String id){
         Optional<JpaUser> jpaUser = repository.findById(id);
+        return jpaUser.map(mapper::toDomain);
+    }
+
+    public Optional<User> findByEmail(String email){
+        Optional<JpaUser> jpaUser = repository.findByEmail(email);
         return jpaUser.map(mapper::toDomain);
     }
 
