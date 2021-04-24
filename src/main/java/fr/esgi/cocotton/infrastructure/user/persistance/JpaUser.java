@@ -1,5 +1,6 @@
 package fr.esgi.cocotton.infrastructure.user.persistance;
 
+import fr.esgi.cocotton.domain.enums.role.Role;
 import fr.esgi.cocotton.infrastructure.comment.persistence.JpaComment;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -39,11 +40,14 @@ public class JpaUser {
     private LocalDate birthDate;
 
     @OneToMany
-    List<JpaComment> comments;
+    private List<JpaComment> comments;
+
+    @ElementCollection
+    private List<Role> roles;
 
     public JpaUser(){}
 
-    public JpaUser(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate) {
+    public JpaUser(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, List<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,6 +56,7 @@ public class JpaUser {
         this.gender = gender;
         this.birthDate = birthDate;
         this.comments = new ArrayList<>();
+        this.roles = roles;
     }
 
     public String getId() {
@@ -116,5 +121,13 @@ public class JpaUser {
 
     public void setComments(List<JpaComment> comments) {
         this.comments = comments;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

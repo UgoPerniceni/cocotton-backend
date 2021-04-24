@@ -1,5 +1,6 @@
 package fr.esgi.cocotton.domain.models.user;
 
+import fr.esgi.cocotton.domain.enums.role.Role;
 import fr.esgi.cocotton.domain.models.comment.Comment;
 
 import java.time.LocalDate;
@@ -15,8 +16,9 @@ public class User {
     private String gender;
     private LocalDate birthDate;
     private List<Comment> comments;
+    private List<Role> roles;
 
-    public User(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate) {
+    public User(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, List<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,6 +26,7 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.birthDate = birthDate;
+        this.roles = roles;
         comments = new ArrayList<>();
     }
 
@@ -89,6 +92,14 @@ public class User {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public void comment(Comment comment){
