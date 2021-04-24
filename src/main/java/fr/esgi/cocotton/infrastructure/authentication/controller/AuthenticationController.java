@@ -32,7 +32,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         HttpHeaders httpHeaders = login.execute(loginDTO);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PostMapping("/register")
