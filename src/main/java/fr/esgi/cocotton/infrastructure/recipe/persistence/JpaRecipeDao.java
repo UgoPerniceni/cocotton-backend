@@ -54,8 +54,7 @@ public class JpaRecipeDao implements RecipeDao{
     }
 
     public String save(Recipe recipe) {
-        JpaUser jpaUser = jpaUserRepository.findById(recipe.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("user for recipe", recipe.getId()));
-        JpaRecipe jpaRecipe = new JpaRecipe(recipe.getId(), recipe.getName(), jpaUser);
+        JpaRecipe jpaRecipe = new JpaRecipe(recipe.getId(), recipe.getName(), userMapper.toEntity(recipe.getUser()));
         repository.save(jpaRecipe);
         return jpaRecipe.getId();
     }

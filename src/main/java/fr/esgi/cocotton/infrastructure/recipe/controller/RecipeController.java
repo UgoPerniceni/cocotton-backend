@@ -4,7 +4,6 @@ import fr.esgi.cocotton.application.recipe.FindAllRecipes;
 import fr.esgi.cocotton.application.recipe.AddRecipe;
 import fr.esgi.cocotton.application.recipe.DeleteRecipe;
 import fr.esgi.cocotton.application.recipe.FindRecipeById;
-import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
 import fr.esgi.cocotton.domain.models.recipe.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -44,8 +42,8 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Recipe recipe){
-        String id = addRecipe.execute(recipe);
+    public ResponseEntity<?> save(@RequestHeader("Authorization") String token, @RequestBody Recipe recipe){
+        String id = addRecipe.execute(recipe, token);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(id)

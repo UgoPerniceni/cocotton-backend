@@ -5,9 +5,7 @@ import fr.esgi.cocotton.application.session.AddSession;
 import fr.esgi.cocotton.application.user.FindUserByEmail;
 import fr.esgi.cocotton.domain.models.session.Session;
 import fr.esgi.cocotton.domain.models.user.User;
-import fr.esgi.cocotton.infrastructure.common.mapper.UserMapper;
 import fr.esgi.cocotton.infrastructure.common.security.TokenProvider;
-import fr.esgi.cocotton.infrastructure.session.persistence.JpaSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 
 @Service
 public class Login {
