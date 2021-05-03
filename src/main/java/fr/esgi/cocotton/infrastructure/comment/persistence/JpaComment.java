@@ -1,7 +1,7 @@
 package fr.esgi.cocotton.infrastructure.comment.persistence;
 
 
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
+import fr.esgi.cocotton.infrastructure.profile.persistance.JpaProfile;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class JpaComment {
     private String content;
 
     @ManyToOne
-    private JpaUser user;
+    private JpaProfile user;
 
     public JpaComment(){}
 
@@ -58,11 +58,11 @@ public class JpaComment {
         this.content = content;
     }
 
-    public JpaUser getUser() {
+    public JpaProfile getProfile() {
         return user;
     }
 
-    public void setUser(JpaUser user) {
+    public void setProfile(JpaProfile user) {
         this.user = user;
     }
 }

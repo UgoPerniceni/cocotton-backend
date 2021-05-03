@@ -1,62 +1,45 @@
-package fr.esgi.cocotton.infrastructure.user.persistance;
+package fr.esgi.cocotton.domain.models.profile;
 
 import fr.esgi.cocotton.domain.enums.role.Role;
-import fr.esgi.cocotton.infrastructure.comment.persistence.JpaComment;
-import org.hibernate.annotations.GenericGenerator;
+import fr.esgi.cocotton.domain.models.comment.Comment;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "profile")
-public class JpaUser {
-
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(updatable = false, nullable = false)
+public class Profile {
     private String id;
-
-    @Column(nullable = false)
     private String firstName;
-
-    @Column(nullable = false)
     private String lastName;
-
-    @Column(nullable = false)
+    private String username;
     private String email;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
     private String gender;
-
-    @Column(nullable = false)
     private LocalDate birthDate;
-
-    @OneToMany
-    private List<JpaComment> comments;
-
-    @ElementCollection
+    private List<Comment> comments;
     private List<Role> roles;
 
-    public JpaUser(){}
-
-    public JpaUser(String id, String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, List<Role> roles) {
+    public Profile(String id, String firstName, String lastName, String username, String email, String password, String gender, LocalDate birthDate, List<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.comments = new ArrayList<>();
         this.roles = roles;
+        comments = new ArrayList<>();
+    }
+
+    public Profile(String firstName, String lastName, String username, String email, String password, String gender, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.birthDate = birthDate;
     }
 
     public String getId() {
@@ -83,12 +66,16 @@ public class JpaUser {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -97,6 +84,10 @@ public class JpaUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getGender() {
@@ -115,11 +106,11 @@ public class JpaUser {
         this.birthDate = birthDate;
     }
 
-    public List<JpaComment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<JpaComment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -129,5 +120,10 @@ public class JpaUser {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void comment(Comment comment){
+        comment.setProfile(this);
+        this.getComments().add(comment);
     }
 }

@@ -1,21 +1,21 @@
-package fr.esgi.cocotton.application.user;
+package fr.esgi.cocotton.application.profile;
 
-import fr.esgi.cocotton.domain.models.user.User;
-import fr.esgi.cocotton.domain.models.user.UserDao;
+import fr.esgi.cocotton.domain.models.profile.Profile;
+import fr.esgi.cocotton.domain.models.profile.ProfileDao;
 import fr.esgi.cocotton.infrastructure.common.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindByIdUser {
-    private final UserDao userDao;
+public class FindProfileById {
+    private final ProfileDao userDao;
 
     @Autowired
-    public FindByIdUser(UserDao userDao){
+    public FindProfileById(ProfileDao userDao){
         this.userDao = userDao;
     }
 
-    public User execute(String id) {
+    public Profile execute(String id) {
         return userDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("user", id));
     }
 }

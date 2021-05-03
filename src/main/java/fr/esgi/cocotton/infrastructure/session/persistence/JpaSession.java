@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.infrastructure.session.persistence;
 
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
+import fr.esgi.cocotton.infrastructure.profile.persistance.JpaProfile;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -25,13 +25,13 @@ public class JpaSession {
     private String token;
 
     @ManyToOne
-    private JpaUser jpaUser;
+    private JpaProfile jpaProfile;
 
 
-    public JpaSession(String token, JpaUser jpaUser){
+    public JpaSession(String token, JpaProfile jpaProfile){
         this.createdAt = LocalDateTime.now();
         this.token = token;
-        this.jpaUser = jpaUser;
+        this.jpaProfile = jpaProfile;
     }
     public JpaSession(){}
 
@@ -59,11 +59,11 @@ public class JpaSession {
         this.token = token;
     }
 
-    public JpaUser getJpaUser() {
-        return jpaUser;
+    public JpaProfile getJpaProfile() {
+        return jpaProfile;
     }
 
-    public void setJpaUser(JpaUser jpaUser) {
-        this.jpaUser = jpaUser;
+    public void setJpaProfile(JpaProfile jpaProfile) {
+        this.jpaProfile = jpaProfile;
     }
 }

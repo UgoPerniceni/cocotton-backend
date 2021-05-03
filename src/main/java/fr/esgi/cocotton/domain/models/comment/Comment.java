@@ -1,12 +1,12 @@
 package fr.esgi.cocotton.domain.models.comment;
 
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 
 public class Comment {
     private String id;
     private String title;
     private String content;
-    private User user;
+    private Profile user;
 
     public Comment(String id, String title, String content) {
         this.id = id;
@@ -38,11 +38,11 @@ public class Comment {
         this.content = content;
     }
 
-    public User getUser() {
+    public Profile getProfile() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setProfile(Profile user) {
         this.user = user;
     }
 }

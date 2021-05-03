@@ -2,8 +2,8 @@ package fr.esgi.cocotton.infrastructure.session.persistence;
 
 import fr.esgi.cocotton.domain.models.session.Session;
 import fr.esgi.cocotton.domain.models.session.SessionDao;
-import fr.esgi.cocotton.domain.models.user.User;
-import fr.esgi.cocotton.infrastructure.common.mapper.UserMapper;
+import fr.esgi.cocotton.domain.models.profile.Profile;
+import fr.esgi.cocotton.infrastructure.common.mapper.ProfileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class JpaSessionDao implements SessionDao {
 
     private final JpaSessionRepository repository;
-    private final UserMapper userMapper;
+    private final ProfileMapper userMapper;
 
     @Autowired
-    public JpaSessionDao(JpaSessionRepository repository, UserMapper userMapper){
+    public JpaSessionDao(JpaSessionRepository repository, ProfileMapper userMapper){
         this.repository = repository;
         this.userMapper = userMapper;
     }
@@ -30,12 +30,12 @@ public class JpaSessionDao implements SessionDao {
                         new Session(jpaSession.getId(),
                                 jpaSession.getCreatedAt(),
                                 jpaSession.getToken(),
-                                userMapper.toDomain(jpaSession.getJpaUser())))
+                                userMapper.toDomain(jpaSession.getJpaProfile())))
                 .collect(Collectors.toList());
     }
 
-    public List<Session> findAllByUser(User user){
-        return repository.findAllByJpaUser(userMapper.toEntity(user))
+    public List<Session> findAllByUser(Profile user){
+        return repository.findAllByjpaProfile(userMapper.toEntity(user))
                 .stream()
                 .map(jpaSession ->
                         new Session(jpaSession.getId(),
@@ -52,12 +52,12 @@ public class JpaSessionDao implements SessionDao {
                         new Session(jpaSession.getId(),
                                 jpaSession.getCreatedAt(),
                                 jpaSession.getToken(),
-                                userMapper.toDomain(jpaSession.getJpaUser()))
+                                userMapper.toDomain(jpaSession.getJpaProfile()))
                 );
     }
 
     public void save(Session session){
-        JpaSession jpaSession = new JpaSession(session.getToken(), userMapper.toEntity(session.getUser()));
+        JpaSession jpaSession = new JpaSession(session.getToken(), userMapper.toEntity(session.getProfile()));
         repository.save(jpaSession);
     }
 }

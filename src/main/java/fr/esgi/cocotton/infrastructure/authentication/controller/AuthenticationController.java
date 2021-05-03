@@ -2,7 +2,7 @@ package fr.esgi.cocotton.infrastructure.authentication.controller;
 
 import fr.esgi.cocotton.application.authentication.Login;
 import fr.esgi.cocotton.application.authentication.Register;
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.application.authentication.dto.RegisterDTO;
 import fr.esgi.cocotton.application.authentication.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -36,8 +37,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> save(@RequestBody User user) {
-        URI uri = register.execute(user);
+    public ResponseEntity<?> save(@Valid @RequestBody RegisterDTO registerDTO) {
+        URI uri = register.execute(registerDTO);
         return ResponseEntity.created(uri).build();
     }
 }

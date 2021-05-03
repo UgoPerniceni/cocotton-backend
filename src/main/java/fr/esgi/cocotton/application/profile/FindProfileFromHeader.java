@@ -1,22 +1,22 @@
-package fr.esgi.cocotton.application.user;
+package fr.esgi.cocotton.application.profile;
 
 import fr.esgi.cocotton.application.session.FindSessionByToken;
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindUserFromHeader {
+public class FindProfileFromHeader {
 
     private final FindSessionByToken findSessionByToken;
 
     @Autowired
-    public FindUserFromHeader(FindSessionByToken findSessionByToken){
+    public FindProfileFromHeader(FindSessionByToken findSessionByToken){
         this.findSessionByToken = findSessionByToken;
     }
 
-    public User execute(String token){
+    public Profile execute(String token){
         token = token.substring(7);
-        return findSessionByToken.execute(token).getUser();
+        return findSessionByToken.execute(token).getProfile();
     }
 }
