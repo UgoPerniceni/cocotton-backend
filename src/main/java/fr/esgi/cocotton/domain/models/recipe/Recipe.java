@@ -1,7 +1,7 @@
 package fr.esgi.cocotton.domain.models.recipe;
 
 import fr.esgi.cocotton.domain.models.ingredient.Ingredient;
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ public class Recipe {
     private String id;
     private String name;
     private List<Ingredient> ingredients;
-    private User user;
+    private Profile user;
     private List<String> steps;
 
-    public Recipe(String id, String name, User user){
+    public Recipe(String id, String name, Profile user){
         this.id = id;
         this.name = name;
         this.steps = new ArrayList<>();
@@ -46,11 +46,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public User getUser() {
+    public Profile getProfile() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setProfile(Profile user) {
         this.user = user;
     }
 

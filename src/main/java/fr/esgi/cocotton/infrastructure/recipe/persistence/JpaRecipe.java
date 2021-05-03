@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.infrastructure.recipe.persistence;
 
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
+import fr.esgi.cocotton.infrastructure.profile.persistance.JpaProfile;
 import fr.esgi.cocotton.infrastructure.ingredient.persistence.JpaIngredient;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,14 +28,14 @@ public class JpaRecipe {
     private List<String> steps;
 
     @ManyToOne
-    private JpaUser user;
+    private JpaProfile user;
 
     @ManyToMany
     List<JpaIngredient> ingredients;
 
     public JpaRecipe(){}
 
-    public JpaRecipe(String id, String name, JpaUser user) {
+    public JpaRecipe(String id, String name, JpaProfile user) {
         this.id = id;
         this.name = name;
         this.user = user;
@@ -59,11 +59,11 @@ public class JpaRecipe {
         this.name = name;
     }
 
-    public JpaUser getUser() {
+    public JpaProfile getProfile() {
         return user;
     }
 
-    public void setUser(JpaUser user) {
+    public void setProfile(JpaProfile user) {
         this.user = user;
     }
 

@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.infrastructure.session.persistence;
 
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
+import fr.esgi.cocotton.infrastructure.profile.persistance.JpaProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ public interface JpaSessionRepository extends JpaRepository<JpaSession, String> 
 
     List<JpaSession> findAll();
 
-    List<JpaSession> findAllByJpaUser(JpaUser jpaUser);
+    List<JpaSession> findAllByjpaProfile(JpaProfile jpaProfile);
 
     Optional<JpaSession> findByToken(String token);
 
