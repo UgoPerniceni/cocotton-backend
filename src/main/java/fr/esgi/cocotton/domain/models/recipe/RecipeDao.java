@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.domain.models.recipe;
 
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ public interface RecipeDao {
 
     Optional<Recipe> findById(String id);
 
-    List<Recipe> findAllByUser(User user);
+    List<Recipe> findAllByUser(Profile user);
 
     List<Recipe> findAllByNameLike(String name);
 

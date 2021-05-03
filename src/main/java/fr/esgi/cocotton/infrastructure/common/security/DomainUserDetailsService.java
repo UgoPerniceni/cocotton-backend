@@ -1,8 +1,7 @@
 package fr.esgi.cocotton.infrastructure.common.security;
 
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUserRepository;
-import org.springframework.security.authentication.AuthenticationServiceException;
+import fr.esgi.cocotton.application.profile.FindProfileByUsername;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,19 +11,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class DomainUserDetailsService implements UserDetailsService {
 
-    private final JpaUserRepository repository;
+    private final FindProfileByUsername findUserByUsername;
 
-    public DomainUserDetailsService(JpaUserRepository repository) {
-        this.repository = repository;
+    public DomainUserDetailsService(FindProfileByUsername findUserByUsername) {
+        this.findUserByUsername = findUserByUsername;
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
-        JpaUser user = repository.findByEmail(username).orElseThrow(() -> new AuthenticationServiceException("user not found"));
+        Profile profile = findUserByUsername.execute(username);
 
         return User.builder()
                 .username(username)
-                .password(user.getPassword())
+                .password(profile.getPassword())
                 .roles("USER")
                 .accountExpired(false)
                 .accountLocked(false)

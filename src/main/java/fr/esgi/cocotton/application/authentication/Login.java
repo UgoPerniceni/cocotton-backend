@@ -1,10 +1,11 @@
 package fr.esgi.cocotton.application.authentication;
 
 import fr.esgi.cocotton.application.authentication.dto.LoginDTO;
+import fr.esgi.cocotton.application.profile.FindProfileByUsername;
 import fr.esgi.cocotton.application.session.AddSession;
-import fr.esgi.cocotton.application.user.FindUserByEmail;
+import fr.esgi.cocotton.application.profile.FindProfileByEmail;
 import fr.esgi.cocotton.domain.models.session.Session;
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 import fr.esgi.cocotton.infrastructure.common.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,14 +21,14 @@ public class Login {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AddSession addSession;
-    private final FindUserByEmail findUserByEmail;
+    private final FindProfileByUsername findProfileByUsername;
 
     @Autowired
-    public Login(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, AddSession addSession, FindUserByEmail findUserByEmail){
+    public Login(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, AddSession addSession, FindProfileByUsername findProfileByUsername){
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.addSession = addSession;
-        this.findUserByEmail = findUserByEmail;
+        this.findProfileByUsername = findProfileByUsername;
     }
 
     public HttpHeaders execute(LoginDTO loginDTO){
@@ -35,7 +36,7 @@ public class Login {
                 loginDTO.getUsername(),
                 loginDTO.getPassword());
 
-        User user = findUserByEmail.execute(loginDTO.getUsername());
+        Profile user = findProfileByUsername.execute(loginDTO.getUsername());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 

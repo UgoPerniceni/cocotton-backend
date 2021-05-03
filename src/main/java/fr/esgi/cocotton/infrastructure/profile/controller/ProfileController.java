@@ -1,9 +1,9 @@
-package fr.esgi.cocotton.infrastructure.user.controller;
+package fr.esgi.cocotton.infrastructure.profile.controller;
 
-import fr.esgi.cocotton.application.user.DeleteUser;
-import fr.esgi.cocotton.application.user.FindAllUser;
-import fr.esgi.cocotton.application.user.FindByIdUser;
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.application.profile.DeleteProfileById;
+import fr.esgi.cocotton.application.profile.FindAllProfiles;
+import fr.esgi.cocotton.application.profile.FindProfileById;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,27 +14,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class ProfileController {
 
-    private final FindAllUser findAllUser;
-    private final FindByIdUser findByIdUser;
-    private final DeleteUser deleteUser;
+    private final FindAllProfiles findAllUser;
+    private final FindProfileById findByIdUser;
+    private final DeleteProfileById deleteUser;
 
     @Autowired
-    public UserController(FindAllUser findAllUser, FindByIdUser findByIdUser, DeleteUser deleteUser) {
+    public ProfileController(FindAllProfiles findAllUser, FindProfileById findByIdUser, DeleteProfileById deleteUser) {
         this.findAllUser = findAllUser;
         this.findByIdUser = findByIdUser;
         this.deleteUser = deleteUser;
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<Profile>> findAll(){
         return new ResponseEntity<>(findAllUser.execute(), HttpStatus.OK);
     }
 
     @RolesAllowed("USER")
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable String id){
+    public ResponseEntity<Profile> findById(@PathVariable String id){
         return new ResponseEntity<>(findByIdUser.execute(id), HttpStatus.OK);
     }
 

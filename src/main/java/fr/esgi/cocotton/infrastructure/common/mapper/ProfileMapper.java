@@ -1,8 +1,8 @@
 package fr.esgi.cocotton.infrastructure.common.mapper;
 
 import fr.esgi.cocotton.domain.enums.role.Role;
-import fr.esgi.cocotton.domain.models.user.User;
-import fr.esgi.cocotton.infrastructure.user.persistance.JpaUser;
+import fr.esgi.cocotton.domain.models.profile.Profile;
+import fr.esgi.cocotton.infrastructure.profile.persistance.JpaProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,31 +10,33 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserMapper implements ObjectMapper<User, JpaUser> {
+public class ProfileMapper implements ObjectMapper<Profile, JpaProfile> {
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserMapper(PasswordEncoder passwordEncoder){
+    public ProfileMapper(PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User toDomain(JpaUser jpaUser) {
-        return new User(jpaUser.getId(),
-                jpaUser.getFirstName(),
-                jpaUser.getLastName(),
-                jpaUser.getEmail(),
-                jpaUser.getPassword(),
-                jpaUser.getGender(),
-                jpaUser.getBirthDate(),
+    public Profile toDomain(JpaProfile jpaProfile) {
+        return new Profile(jpaProfile.getId(),
+                jpaProfile.getFirstName(),
+                jpaProfile.getLastName(),
+                jpaProfile.getUsername(),
+                jpaProfile.getEmail(),
+                jpaProfile.getPassword(),
+                jpaProfile.getGender(),
+                jpaProfile.getBirthDate(),
                 List.of(Role.USER)
         );
     }
 
-    public JpaUser toEntity(User user) {
-        return new JpaUser(user.getId(),
+    public JpaProfile toEntity(Profile user) {
+        return new JpaProfile(user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getUsername(),
                 user.getEmail(),
                 passwordEncoder.encode(user.getPassword()),
                 user.getGender(),

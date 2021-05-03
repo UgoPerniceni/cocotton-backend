@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.domain.models.session;
 
-import fr.esgi.cocotton.domain.models.user.User;
+import fr.esgi.cocotton.domain.models.profile.Profile;
 
 import java.time.LocalDateTime;
 
@@ -9,9 +9,9 @@ public class Session {
     private String id;
     private LocalDateTime createdAt;
     private String token;
-    private User user;
+    private Profile user;
 
-    public Session(String id, LocalDateTime createdAt, String token, User user){
+    public Session(String id, LocalDateTime createdAt, String token, Profile user){
         this.id = id;
         this.createdAt = createdAt;
         this.token = token;
@@ -42,11 +42,11 @@ public class Session {
         this.token = token;
     }
 
-    public User getUser() {
+    public Profile getProfile() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setProfile(Profile user) {
         this.user = user;
     }
 }

@@ -1,15 +1,15 @@
-package fr.esgi.cocotton.application.user;
-import fr.esgi.cocotton.domain.models.user.UserDao;
+package fr.esgi.cocotton.application.profile;
+import fr.esgi.cocotton.domain.models.profile.ProfileDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DeleteUser {
-    private final UserDao userDao;
-    private final FindByIdUser findByIdUser;
+public class DeleteProfileById {
+    private final ProfileDao userDao;
+    private final FindProfileById findByIdUser;
 
     @Autowired
-    public DeleteUser(UserDao userDao, FindByIdUser findByIdUser){
+    public DeleteProfileById(ProfileDao userDao, FindProfileById findByIdUser){
         this.userDao = userDao;
         this.findByIdUser = findByIdUser;
     }
