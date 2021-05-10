@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'openjdk:11-jre-slim'
-            image 'maven:3.6.0-jdk-11-slim'
-        }
-    }
+    agent any
 
     stages {
         stage('Initialize') {
