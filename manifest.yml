@@ -1,0 +1,5 @@
+applications:
+  - name: cicd-jenkins-example
+    instances: 1
+    memory: 128m
+    path: target/cocotton-backend-0.0.1-SNAPSHOT.jar
