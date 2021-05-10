@@ -1,4 +1,8 @@
 language: java
+sudo: true
+before_install:
+  - chmod +x mvnw
 
 script:
-  - mvn package -DskipTests
+  - ./mvnw clean package -DskipTests
+
