@@ -3,6 +3,13 @@ sudo: true
 before_install:
   - chmod +x mvnw
 
-script:
-  - ./mvnw clean package -DskipTests
-
+jobs:
+  include:
+    - stage: test
+      name: "Run tests..."
+    - stage: build
+      name: "Build..."
+      script:
+        - ./mvnw clean package -DskipTests
+    - stage: deploy
+      name: "Deploy..."
