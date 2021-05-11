@@ -1,4 +1,5 @@
-.
+
+![Travis (.com)](https://img.shields.io/travis/com/UgoPerniceni/cocotton-backend) 
 
 ![docker_build](https://img.shields.io/docker/cloud/build/ugop/cocotton-backend)
 
