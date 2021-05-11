@@ -6,7 +6,7 @@ before_install:
 jobs:
   include:
     - stage: test
-      name: "Run tests..."
+      name: "Test..."
     - stage: build
       name: "Build..."
       script:
