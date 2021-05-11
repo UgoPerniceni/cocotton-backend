@@ -6,9 +6,6 @@ before_install:
 addons:
   sonarcloud:
     organization: "esgi-4-al"
-    token:
-      # encrypted
-      secure: "JucKaq2wEZ46GgsOTsKj+2nVTLp5frrdqnTK+ZzL3PoS5tAYMUMNBavhVpnqNF/OZ04pjQoFjzElcVJMayApAP3OIbhL5Nr4Hdv9QkANJx+G6SbsLVN+UZU1UKANkin0A8/C5xTK4vdlAOYFJyYUjnKG0McIGkNhv34eIRqOveWF78KvlVbQ/O+fD8/H6FAC0HnmHVhb+y7nCzUQplRqoyptveXoIVN3y3TmDOJSgTQzGgTaFFo19zoD28S8y5f4S072gbOV8jk39GxC9CYxRTuwKDL7pNY4GhrGo9+unQWdnq85Hei4T1z4MHa4CYlyMdI3vOdEtkg9KaREetaaX+VZR1eliaHwiVwZoDjUA5MldBVJWCIoJmbhWf0rBiyH9aq8O+grpaGunaKVfBkn5y8zRSrarPbX/i+spLvWCHqsH1vWeLQXV1lCYLawoXcwKN+CjEQtg0Pzl+9D4oFA8ggsQUiw5TqWDbQUL9kQcP1782Kk/q+4TjBoEjyNC0SWd+DfIMg4BN5LDAnQGM7mCi1ON99OzPL8yGpxrGtBOnQYRfq2L9lQffPs7EAHmABWe/px+aDDS1u3HWlI57YJA17zpd8chk8vkMeko+iGddIGUo/HNeBHk2FSjFk/6yAZtQefTdrTI01t/fhI8tPpw70ym4wJwAR1Rsmt/ezwSAQ="
 jobs:
   include:
     - stage: test
@@ -17,7 +14,7 @@ jobs:
       name: "Build..."
       script:
         - ./mvnw clean package -DskipTests
-        - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend
+        - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend -Dsonar.login=${SONAR_TOKEN}
         # ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=UgoPerniceni_cocotton-backend
     - stage: deploy
       name: "Deploy..."
