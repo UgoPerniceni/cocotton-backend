@@ -17,6 +17,6 @@ jobs:
       name: "Build..."
       script:
         - ./mvnw clean package -DskipTests
-        - ./mvnw clean install sonar:sonar
+        - sonar-scanner
     - stage: deploy
       name: "Deploy..."
