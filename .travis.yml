@@ -17,6 +17,6 @@ jobs:
       name: "Build..."
       script:
         - ./mvnw clean package -DskipTests
-        - sonar-scanner
+        - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend
     - stage: deploy
       name: "Deploy..."
