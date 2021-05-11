@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ProfileMapper implements ObjectMapper<Profile, JpaProfile> {
 
     private final PasswordEncoder passwordEncoder;
+    private final List<Role> roles = Collections.singletonList(Role.USER);
 
     @Autowired
     public ProfileMapper(PasswordEncoder passwordEncoder){
@@ -28,7 +30,7 @@ public class ProfileMapper implements ObjectMapper<Profile, JpaProfile> {
                 jpaProfile.getPassword(),
                 jpaProfile.getGender(),
                 jpaProfile.getBirthDate(),
-                List.of(Role.USER)
+                roles
         );
     }
 

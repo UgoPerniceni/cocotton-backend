@@ -14,13 +14,36 @@
 	<name>cocotton-backend</name>
 	<description>Cocotton Back-end with Spring boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+		<spring-cloud-gcp.version>1.0.0.RELEASE</spring-cloud-gcp.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>2.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.7.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.3.7.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -57,6 +80,75 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>cloud-gcp</id>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework.cloud</groupId>
+						<artifactId>spring-cloud-dependencies</artifactId>
+						<version>${spring-cloud.version}</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter</artifactId>
+					<version>${spring-cloud-gcp.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
+					<version>${spring-cloud-gcp.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>com.google.cloud.sql</groupId>
+					<artifactId>postgres-socket-factory</artifactId>
+					<version>1.2.1</version>
+				</dependency>
+				<dependency>
+					<groupId>com.google.http-client</groupId>
+					<artifactId>google-http-client</artifactId>
+					<version>1.38.1</version>
+				</dependency>
+				<dependency>
+					<groupId>com.google.api-client</groupId>
+					<artifactId>google-api-client</artifactId>
+					<version>1.31.1</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<finalName>${project.name}-gcp</finalName>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<excludes>
+							<exclude>**/logback.xml</exclude>
+						</excludes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>appengine-maven-plugin</artifactId>
+						<version>1.3.2</version>
+						<configuration>
+							<cloudSdkPath>/home/kelig/google-cloud-sdk</cloudSdkPath>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -72,7 +164,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
-
 </project>
