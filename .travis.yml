@@ -6,16 +6,17 @@ before_install:
 addons:
   sonarcloud:
     organization: "esgi-4-al"
+
 jobs:
   include:
     - stage: test
     name: "Test..."
     script:
       - ./mvnw clean test
-    - stage: build
-      name: "Build..."
-      script:
-        - ./mvnw clean package -DskipTests
-        - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend -Dsonar.login=${SONAR_TOKEN}
-    - stage: deploy
-      name: "Deploy..."
+      - stage: build
+        name: "Build..."
+        script:
+          - ./mvnw clean package -DskipTests
+          - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend -Dsonar.login=${SONAR_TOKEN}
+      - stage: deploy
+        name: "Deploy..."
