@@ -10,12 +10,12 @@ addons:
 jobs:
   include:
     - stage: test
-    name: "Test..."
-    script:
+      name: "Test..."
+      script:
       - ./mvnw clean test
-      - stage: build
-        name: "Build..."
-        script:
-          - ./mvnw clean package -DskipTests
-      - stage: deploy
-        name: "Deploy..."
+    - stage: build
+      name: "Build..."
+      script:
+        - ./mvnw clean package -DskipTests
+    - stage: deploy
+      name: "Deploy..."
