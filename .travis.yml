@@ -23,3 +23,5 @@ jobs:
       provider: gae
       keyfile: ./cocotton-api-7cad61f97f44.json
       project: "cocotton-api"
+      script:
+        - ./mvnw appengine:deploy -P cloud-gcp

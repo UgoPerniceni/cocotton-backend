@@ -141,9 +141,6 @@
 						<groupId>com.google.cloud.tools</groupId>
 						<artifactId>appengine-maven-plugin</artifactId>
 						<version>1.3.2</version>
-						<configuration>
-							<cloudSdkPath>/home/kelig/google-cloud-sdk</cloudSdkPath>
-						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.springframework.boot</groupId>
