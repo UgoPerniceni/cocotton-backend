@@ -10,6 +10,8 @@ jobs:
   include:
     - stage: test
     name: "Test..."
+    script:
+      - ./mvnw clean test
     - stage: build
       name: "Build..."
       script:
