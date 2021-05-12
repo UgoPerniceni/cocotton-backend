@@ -6,11 +6,12 @@ before_install:
 addons:
   sonarcloud:
     organization: "esgi-4-al"
+
 jobs:
   include:
     - stage: test
-    name: "Test..."
-    script:
+      name: "Test..."
+      script:
       - ./mvnw clean test
     - stage: build
       name: "Build..."
