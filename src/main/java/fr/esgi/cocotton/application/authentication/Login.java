@@ -3,7 +3,6 @@ package fr.esgi.cocotton.application.authentication;
 import fr.esgi.cocotton.application.authentication.dto.LoginDTO;
 import fr.esgi.cocotton.application.profile.FindProfileByUsername;
 import fr.esgi.cocotton.application.session.AddSession;
-import fr.esgi.cocotton.application.profile.FindProfileByEmail;
 import fr.esgi.cocotton.domain.models.session.Session;
 import fr.esgi.cocotton.domain.models.profile.Profile;
 import fr.esgi.cocotton.infrastructure.common.security.TokenProvider;
