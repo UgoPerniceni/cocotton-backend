@@ -14,36 +14,16 @@
 	<name>cocotton-backend</name>
 	<description>Cocotton Back-end with Spring boot</description>
 	<properties>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-		<spring-cloud-gcp.version>1.0.0.RELEASE</spring-cloud-gcp.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.4.3</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.3.7.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.3.7.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -52,12 +32,29 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.10</version>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>4.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.8.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>5.1.2.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -75,86 +72,35 @@
 			<version>0.9.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.7</version>
-		</dependency>
-		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 	</dependencies>
 
 	<profiles>
 		<profile>
-			<id>cloud-gcp</id>
-			<dependencyManagement>
-				<dependencies>
-					<dependency>
-						<groupId>org.springframework.cloud</groupId>
-						<artifactId>spring-cloud-dependencies</artifactId>
-						<version>${spring-cloud.version}</version>
-						<type>pom</type>
-						<scope>import</scope>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
-			<dependencies>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter</artifactId>
-					<version>${spring-cloud-gcp.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
-					<version>${spring-cloud-gcp.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>com.google.cloud.sql</groupId>
-					<artifactId>postgres-socket-factory</artifactId>
-					<version>1.2.1</version>
-				</dependency>
-				<dependency>
-					<groupId>com.google.http-client</groupId>
-					<artifactId>google-http-client</artifactId>
-					<version>1.38.1</version>
-				</dependency>
-				<dependency>
-					<groupId>com.google.api-client</groupId>
-					<artifactId>google-api-client</artifactId>
-					<version>1.31.1</version>
-				</dependency>
-			</dependencies>
-			<build>
-				<finalName>${project.name}-gcp</finalName>
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>
-						<excludes>
-							<exclude>**/logback.xml</exclude>
-						</excludes>
-					</resource>
-				</resources>
-				<plugins>
-					<plugin>
-						<groupId>com.google.cloud.tools</groupId>
-						<artifactId>appengine-maven-plugin</artifactId>
-						<version>1.3.2</version>
-					</plugin>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
 		</profile>
-
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+		</profile>
 		<profile>
 			<id>coverage</id>
 			<build>
@@ -182,15 +128,12 @@
 			</build>
 		</profile>
 	</profiles>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.4.3</version>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
