@@ -14,4 +14,6 @@ public interface CommentDao {
     String save(Comment comment);
 
     void deleteById(String id);
+
+//    String censorCommentContent(Comment comment);
 }

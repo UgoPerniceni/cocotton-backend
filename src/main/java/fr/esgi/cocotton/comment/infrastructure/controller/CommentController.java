@@ -27,18 +27,21 @@ public class CommentController {
     private final FindCommentById findCommentById;
     private final AddComment addComment;
     private final DeleteCommentById deleteCommentById;
+    private final CensorCommentContent censorCommentContent;
 
     @Autowired
     public CommentController(FindAllComments findAllComments,
                              FindAllCommentsByUserId findAllCommentsByUserId,
                              FindCommentById findCommentById,
                              AddComment addComment,
-                             DeleteCommentById deleteCommentById) {
+                             DeleteCommentById deleteCommentById,
+                             CensorCommentContent censorCommentContent) {
         this.findAllComments = findAllComments;
         this.findAllCommentsByUserId = findAllCommentsByUserId;
         this.findCommentById = findCommentById;
         this.addComment = addComment;
         this.deleteCommentById = deleteCommentById;
+        this.censorCommentContent = censorCommentContent;
     }
 
     @GetMapping
@@ -58,6 +61,8 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Comment comment) {
+        String censoredContent = censorCommentContent.execute(comment);
+        comment.setContent(censoredContent);
         String id = addComment.execute(comment);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
