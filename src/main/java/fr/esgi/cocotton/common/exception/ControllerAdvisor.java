@@ -1,5 +1,6 @@
 package fr.esgi.cocotton.common.exception;
 
+import fr.esgi.cocotton.beer.infrastructure.error.BeerNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +41,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceOwnershipException.class)
     protected ResponseEntity<?> handleResourceOwnership(ResourceOwnershipException exception, WebRequest request) {
         return handleExceptionInternal(exception, exception.getErrors(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
+
+    @ExceptionHandler(BeerNotFoundException.class)
+    protected ResponseEntity<?> handleBeerNotFound(BeerNotFoundException exception, WebRequest request) {
+        return handleExceptionInternal(exception, exception.getErrors(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @Override
