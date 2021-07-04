@@ -4,6 +4,7 @@ import fr.esgi.cocotton.comment.domain.Comment;
 import fr.esgi.cocotton.comment.domain.CommentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static fr.esgi.cocotton.comment.domain.CensorCommentContent.censorComment;
 
 @Service
 public class AddComment {
@@ -16,6 +17,7 @@ public class AddComment {
     }
 
     public String execute(Comment comment) {
+        comment.setContent(censorComment(comment.getContent()));
         return commentDao.save(comment);
     }
 }

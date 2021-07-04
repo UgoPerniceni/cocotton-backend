@@ -26,7 +26,7 @@ public class CensorCommentContent {
     }
 
     public static String censorComment(String content) {
-        ArrayList<String> bannedWords = retrieveBannedWordsFromFile("src/main/java/fr/esgi/cocotton/comment/application/censored-words.txt");
+        ArrayList<String> bannedWords = retrieveBannedWordsFromFile("src/main/resources/censored-words.txt");
         for (String bannedWord : bannedWords) {
             String censor = new String(new char[bannedWord.length()]).replace('\0', '*');
             content = content.replaceAll(bannedWord, censor);

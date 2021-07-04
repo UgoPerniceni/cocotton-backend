@@ -15,7 +15,7 @@ public class Comment {
 
     public Comment(String id, String content, String userId) {
         this.id = id;
-        this.content = censorComment(content);
+        this.content = content;
         this.userId = userId;
     }
 
