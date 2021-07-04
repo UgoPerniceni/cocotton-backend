@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.comment.application;
+package fr.esgi.cocotton.comment.domain;
 
 import fr.esgi.cocotton.comment.domain.Comment;
 import fr.esgi.cocotton.comment.domain.CommentDao;
@@ -7,19 +7,9 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
 
-@Service
 public class CensorCommentContent {
 
-    private final CommentDao commentDao;
-    private ArrayList<String> bannedWords;
-
-    public CensorCommentContent(CommentDao commentDao) {
-        this.commentDao = commentDao;
-        // TODO get file path from properties
-        this.bannedWords = retrieveBannedWordsFromFile("src/main/java/fr/esgi/cocotton/comment/application/censored-words.txt");
-    }
-
-    public ArrayList<String> retrieveBannedWordsFromFile(String filePath) {
+    public static ArrayList<String> retrieveBannedWordsFromFile(String filePath) {
         ArrayList<String> bannedWords = new ArrayList<>();
         File censuredWordsFile = new File(filePath);
         try(FileReader fileStream = new FileReader( censuredWordsFile );
@@ -35,16 +25,12 @@ public class CensorCommentContent {
         return bannedWords;
     }
 
-    public String censorComment(Comment comment) {
-        String censoredCommentContent = comment.getContent();
-        for (String bannedWord : this.bannedWords) {
+    public static String censorComment(String content) {
+        ArrayList<String> bannedWords = retrieveBannedWordsFromFile("src/main/java/fr/esgi/cocotton/comment/application/censored-words.txt");
+        for (String bannedWord : bannedWords) {
             String censor = new String(new char[bannedWord.length()]).replace('\0', '*');
-            censoredCommentContent = censoredCommentContent.replaceAll(bannedWord, censor);
+            content = content.replaceAll(bannedWord, censor);
         }
-        return censoredCommentContent;
-    }
-
-    public String execute(Comment comment){
-        return censorComment(comment);
+        return content;
     }
 }

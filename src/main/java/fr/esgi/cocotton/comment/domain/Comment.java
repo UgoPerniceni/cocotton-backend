@@ -1,5 +1,12 @@
 package fr.esgi.cocotton.comment.domain;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import static fr.esgi.cocotton.comment.domain.CensorCommentContent.censorComment;
+
 public class Comment {
 
     private String id;
@@ -8,7 +15,7 @@ public class Comment {
 
     public Comment(String id, String content, String userId) {
         this.id = id;
-        this.content = content;
+        this.content = censorComment(content);
         this.userId = userId;
     }
 
