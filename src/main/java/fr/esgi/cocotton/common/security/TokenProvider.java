@@ -27,8 +27,7 @@ public class TokenProvider {
     }
 
     public String createToken(Authentication authentication, String userId) {
-        String authorities = authentication.getAuthorities()
-                .stream()
+        String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
@@ -45,21 +44,22 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String token) {
         Claims claims = parseToken(token).getBody();
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY)
-                .toString()
-                .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
 
-        User user = new User(claims.getSubject(), "", authorities);
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
 
-        return new UsernamePasswordAuthenticationToken(user, token, authorities);
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
     public boolean validateToken(String authToken) {
         try {
             parseToken(authToken);
             return true;
+
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }

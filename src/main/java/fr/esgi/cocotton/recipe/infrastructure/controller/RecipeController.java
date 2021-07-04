@@ -5,6 +5,7 @@ import fr.esgi.cocotton.recipe.application.FindAllRecipes;
 import fr.esgi.cocotton.recipe.application.FindAllRecipesByUserId;
 import fr.esgi.cocotton.recipe.application.FindRecipeById;
 import fr.esgi.cocotton.recipe.domain.Recipe;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -47,8 +48,8 @@ public class RecipeController {
     }
 
     @PostMapping("/api/recipes")
-    public ResponseEntity<?> save(@RequestBody Recipe recipe) {
-        String id = addRecipe.execute(recipe);
+    public ResponseEntity<?> save(@RequestBody Recipe recipe, @RequestHeader("Authorization") String token) {
+        String id = addRecipe.execute(recipe, token);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -60,8 +61,8 @@ public class RecipeController {
 
     @MessageMapping("/api/recipes/socket")
     @SendTo("/socket/recipes")
-    public ResponseEntity<?> saveWithSocket(@RequestBody Recipe recipe) {
-        String id = addRecipe.execute(recipe);
+    public ResponseEntity<?> saveWithSocket(@RequestBody Recipe recipe, @RequestHeader("Authorization") String token) {
+        String id = addRecipe.execute(recipe, token);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
