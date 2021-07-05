@@ -1,6 +1,8 @@
 package fr.esgi.cocotton.beer.application;
 
 import fr.esgi.cocotton.beer.infrastructure.error.RestTemplateResponseErrorHandler;
+import fr.esgi.cocotton.profile.application.FindProfileFromToken;
+import fr.esgi.cocotton.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,14 +14,20 @@ public class FindRandomBeer {
 
     private final RestTemplate restTemplate;
     private final String endpoint;
+    private final FindProfileFromToken findProfileFromToken;
 
     @Autowired
-    public FindRandomBeer(RestTemplateBuilder restTemplateBuilder, @Value("${external.api.endpoint}") String endpoint) {
+    public FindRandomBeer(RestTemplateBuilder restTemplateBuilder, @Value("${external.api.endpoint}") String endpoint, FindProfileFromToken findProfileFromToken) {
         this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        this.findProfileFromToken = findProfileFromToken;
         this.endpoint = endpoint;
     }
 
-    public Object execute() {
+    public Object execute(String token) {
+        Profile profile = findProfileFromToken.execute(token);
+        if(!profile.isAdult()) {
+            return null;
+        }
         return restTemplate.getForObject(endpoint + "/random", Object.class);
     }
 }

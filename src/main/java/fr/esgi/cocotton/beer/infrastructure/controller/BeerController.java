@@ -6,10 +6,7 @@ import fr.esgi.cocotton.beer.application.FindRandomBeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequestMapping("/api/beers")
@@ -28,17 +25,17 @@ public class BeerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        return new ResponseEntity<>(findAllBeers.execute(), HttpStatus.OK);
+    public ResponseEntity<?> findAll(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<>(findAllBeers.execute(token), HttpStatus.OK);
     }
 
     @GetMapping("/random")
-    public ResponseEntity<?> findRandom() {
-        return new ResponseEntity<>(findRandomBeer.execute(), HttpStatus.OK);
+    public ResponseEntity<?> findRandom(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<>(findRandomBeer.execute(token), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
-        return new ResponseEntity<>(findBeerById.execute(id), HttpStatus.OK);
+    public ResponseEntity<?> findById(@PathVariable int id, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<>(findBeerById.execute(id, token), HttpStatus.OK);
     }
 }
