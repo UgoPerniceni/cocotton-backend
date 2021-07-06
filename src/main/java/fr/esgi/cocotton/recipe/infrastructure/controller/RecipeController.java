@@ -1,16 +1,12 @@
 package fr.esgi.cocotton.recipe.infrastructure.controller;
 
-import fr.esgi.cocotton.recipe.application.AddRecipe;
-import fr.esgi.cocotton.recipe.application.FindAllRecipes;
-import fr.esgi.cocotton.recipe.application.FindAllRecipesByUserId;
-import fr.esgi.cocotton.recipe.application.FindRecipeById;
+import fr.esgi.cocotton.recipe.application.*;
 import fr.esgi.cocotton.recipe.domain.Recipe;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,12 +20,14 @@ public class RecipeController {
     private final FindRecipeById findRecipeById;
     private final FindAllRecipesByUserId findAllRecipesByUserId;
     private final AddRecipe addRecipe;
+    private final DeleteRecipeById deleteRecipeById;
 
-    public RecipeController(FindAllRecipes findAllRecipes, FindRecipeById findRecipeById, FindAllRecipesByUserId findAllRecipesByUserId, AddRecipe addRecipe) {
+    public RecipeController(FindAllRecipes findAllRecipes, FindRecipeById findRecipeById, FindAllRecipesByUserId findAllRecipesByUserId, AddRecipe addRecipe, DeleteRecipeById deleteRecipeById) {
         this.findAllRecipes = findAllRecipes;
         this.findRecipeById = findRecipeById;
         this.findAllRecipesByUserId = findAllRecipesByUserId;
         this.addRecipe = addRecipe;
+        this.deleteRecipeById = deleteRecipeById;
     }
 
     @GetMapping("/api/recipes")
@@ -57,6 +55,12 @@ public class RecipeController {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/api/recipes/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable String id) {
+        deleteRecipeById.execute(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @MessageMapping("/api/recipes/socket")
