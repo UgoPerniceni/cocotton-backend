@@ -48,7 +48,6 @@ public class RecipeController {
     @PostMapping("/api/recipes")
     public ResponseEntity<?> save(@RequestBody Recipe recipe, @RequestHeader("Authorization") String token) {
         String id = addRecipe.execute(recipe, token);
-
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(id)
