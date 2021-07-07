@@ -1,9 +1,5 @@
 package fr.esgi.cocotton.comment.domain;
 
-import fr.esgi.cocotton.comment.domain.Comment;
-import fr.esgi.cocotton.comment.domain.CommentDao;
-import org.springframework.stereotype.Service;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -11,7 +7,13 @@ public class CensorCommentContent {
 
     public static ArrayList<String> retrieveBannedWordsFromFile(String filePath) {
         ArrayList<String> bannedWords = new ArrayList<>();
-        File censuredWordsFile = new File(filePath);
+        File censuredWordsFile = null;
+        try{
+            censuredWordsFile = new File(filePath);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         try(FileReader fileStream = new FileReader( censuredWordsFile );
             BufferedReader bufferedReader = new BufferedReader( fileStream ) ) {
             String line;
