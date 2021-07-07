@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.profile.domain;
 
-import fr.esgi.cocotton.profile.enums.Role;
+import fr.esgi.cocotton.profile.application.dto.ProfileDTO;
 
 import java.time.LocalDate;
 
@@ -88,6 +88,10 @@ public class Profile {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public ProfileDTO toProfileDTO() {
+        return new ProfileDTO(this);
     }
 
     @Override

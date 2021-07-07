@@ -1,6 +1,7 @@
 package fr.esgi.cocotton.profile.infrastructure.controller;
 
 import fr.esgi.cocotton.profile.application.*;
+import fr.esgi.cocotton.profile.application.dto.ProfileDTO;
 import fr.esgi.cocotton.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,12 +31,12 @@ public class ProfileController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Profile>> findAll(){
+    public ResponseEntity<List<ProfileDTO>> findAll(){
         return new ResponseEntity<>(findAllProfiles.execute(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> findById(@PathVariable String id){
+    public ResponseEntity<ProfileDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(findProfileById.execute(id), HttpStatus.OK);
     }
 
