@@ -89,9 +89,13 @@ public class Profile {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
+  
+    public boolean isAdult() {
+        return LocalDate.now().minusYears(18).isAfter(this.birthDate);
+    }
+  
     public ProfileDTO toProfileDTO() {
-        return new ProfileDTO(this);
+      return new ProfileDTO(this);
     }
 
     @Override
