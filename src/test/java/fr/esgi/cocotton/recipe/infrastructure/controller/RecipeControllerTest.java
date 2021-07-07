@@ -1,6 +1,5 @@
 package fr.esgi.cocotton.recipe.infrastructure.controller;
 
-import com.jayway.restassured.http.ContentType;
 import fr.esgi.cocotton.recipe.application.*;
 import fr.esgi.cocotton.recipe.domain.Recipe;
 import org.junit.Before;
@@ -9,18 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.servlet.support.RequestContext;
-import org.springframework.webflow.test.MockRequestContext;
 
 import java.util.Arrays;
-
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.http.ContentType.JSON;
 import static org.mockito.Mockito.verify;
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeControllerTest {
