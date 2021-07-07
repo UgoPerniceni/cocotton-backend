@@ -6,13 +6,7 @@ import fr.esgi.cocotton.comment.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -58,8 +52,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Comment comment) {
-        String id = addComment.execute(comment);
+    public ResponseEntity<?> save(@RequestBody Comment comment, @RequestHeader("Authorization") String token) {
+        String id = addComment.execute(comment, token);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(id)
