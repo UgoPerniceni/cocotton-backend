@@ -3,18 +3,21 @@ package fr.esgi.cocotton.recipe.infrastructure.controller;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import fr.esgi.cocotton.AbstractBigTest;
+import fr.esgi.cocotton.recipe.application.AddRecipe;
 import fr.esgi.cocotton.recipe.application.FindAllRecipes;
 import fr.esgi.cocotton.recipe.domain.Recipe;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.Arrays;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpStatus.*;
 
 public class RecipeControllerBigTest extends AbstractBigTest {
@@ -237,6 +240,9 @@ public class RecipeControllerBigTest extends AbstractBigTest {
 
     @After
     public void clear() {
+
+        System.out.println(this.token);
+
         Response response = given()
                 .headers(
                         "Authorization",

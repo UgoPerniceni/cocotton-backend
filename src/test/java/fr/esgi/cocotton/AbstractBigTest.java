@@ -11,6 +11,7 @@ import fr.esgi.cocotton.authentication.application.dto.RegisterDTO;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,8 +34,8 @@ import static org.springframework.http.HttpStatus.OK;
 @ActiveProfiles("integration")
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations="classpath:test.properties")
-@SpringBootTest(webEnvironment = DEFINED_PORT, properties = "server.port=9090")
-public class AbstractBigTest {
+@SpringBootTest(webEnvironment = DEFINED_PORT, properties = "server.port=8999")
+public abstract class AbstractBigTest {
 
     private static final Logger LOGGER = getLogger(AbstractBigTest.class);
 
@@ -104,9 +105,5 @@ public class AbstractBigTest {
                 .log().all()
                 .statusCode(NO_CONTENT.value());
         System.out.println(response);
-    }
-
-    @Test
-    void contextLoads() {
     }
 }
