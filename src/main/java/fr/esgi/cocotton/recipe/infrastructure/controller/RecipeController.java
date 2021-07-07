@@ -46,9 +46,10 @@ public class RecipeController {
     }
 
     @PostMapping("/api/recipes")
-    public ResponseEntity<?> save(@RequestBody Recipe recipe) {
+    public ResponseEntity<?> save(@RequestHeader (name="Authorization") String token, @RequestBody Recipe recipe) {
+        // TODO recuperer la session par le token et le user par la session et set le user id dans la recipe
+        //getSessionByToken
         String id = addRecipe.execute(recipe);
-
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(id)
