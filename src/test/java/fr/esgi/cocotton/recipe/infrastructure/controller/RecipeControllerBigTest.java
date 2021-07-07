@@ -243,8 +243,6 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                 .when()
                 .get("/api/recipes/");
 
-        System.out.println(response.body().asString());
-
         given()
                 .headers(
                         "Authorization",
