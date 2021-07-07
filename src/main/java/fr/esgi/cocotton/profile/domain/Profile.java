@@ -90,6 +90,10 @@ public class Profile {
         this.birthDate = birthDate;
     }
 
+    public boolean isAdult() {
+        return LocalDate.now().minusYears(18).isAfter(this.birthDate);
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
