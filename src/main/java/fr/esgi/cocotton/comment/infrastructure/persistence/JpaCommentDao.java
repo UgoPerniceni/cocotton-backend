@@ -51,4 +51,9 @@ public class JpaCommentDao implements CommentDao {
     public void deleteById(String id) {
         repository.deleteById(id);
     }
+
+//    @Override
+//    public String censorCommentContent(Comment comment) {
+//        return null;
+//    }
 }

@@ -1,6 +1,7 @@
 package fr.esgi.cocotton.comment.infrastructure.controller;
 
 import fr.esgi.cocotton.comment.application.*;
+import fr.esgi.cocotton.comment.domain.CensorCommentContent;
 import fr.esgi.cocotton.comment.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

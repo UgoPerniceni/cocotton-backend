@@ -3,13 +3,10 @@ package fr.esgi.cocotton;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.response.Validatable;
 import com.jayway.restassured.response.ValidatableResponse;
 import fr.esgi.cocotton.authentication.application.dto.LoginDTO;
 import fr.esgi.cocotton.authentication.application.dto.RegisterDTO;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +19,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 
 import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
 import static com.jayway.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.hasSize;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
 
 @ActiveProfiles("integration")
 @RunWith(SpringRunner.class)

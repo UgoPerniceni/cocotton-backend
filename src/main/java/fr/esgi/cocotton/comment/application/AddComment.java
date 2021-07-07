@@ -6,6 +6,7 @@ import fr.esgi.cocotton.profile.application.FindProfileFromToken;
 import fr.esgi.cocotton.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static fr.esgi.cocotton.comment.domain.CensorCommentContent.censorComment;
 
 @Service
 public class AddComment {
@@ -20,6 +21,7 @@ public class AddComment {
     }
 
     public String execute(Comment comment, String token) {
+            comment.setContent(censorComment(comment.getContent()));
         Profile profile = findProfileFromToken.execute(token);
         comment.setUserId(profile.getId());
         return commentDao.save(comment);
