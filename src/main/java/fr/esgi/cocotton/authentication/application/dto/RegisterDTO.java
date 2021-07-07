@@ -1,12 +1,16 @@
 package fr.esgi.cocotton.authentication.application.dto;
 
 import fr.esgi.cocotton.common.annotation.StrongPassword;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
+@Data
+@Builder
 public class RegisterDTO {
 
     private final String lastName;

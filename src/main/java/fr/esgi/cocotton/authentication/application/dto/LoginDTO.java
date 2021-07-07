@@ -1,5 +1,8 @@
 package fr.esgi.cocotton.authentication.application.dto;
 
+import lombok.Builder;
+
+@Builder
 public class LoginDTO {
 
     private final String username;
