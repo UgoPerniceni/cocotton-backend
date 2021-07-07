@@ -25,7 +25,6 @@ public class RecipeControllerBigTest extends AbstractBigTest {
     private Recipe recipe = Recipe.builder()
             .title("a recipe title")
             .people(4)
-            .userId(null)
             .steps(Arrays.asList("step one", "step two", "step three"))
             .build();
 
@@ -107,25 +106,6 @@ public class RecipeControllerBigTest extends AbstractBigTest {
 
     @Test
     public void should_get_1_recipe_by_user_id() {
-        this.recipe.setUserId("otherUser");
-        String recipeId = given()
-                .headers(
-                        "Authorization",
-                        this.token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON
-                )
-                .contentType(JSON)
-                .body(toJson(this.recipe))
-                .when()
-                .post("/api/recipes")
-                .then()
-                .log().all()
-                .statusCode(CREATED.value())
-                .extract().header("Location")
-                .split("recipes/")[1];
 
         given()
                 .headers(
@@ -138,17 +118,6 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                 .log().all()
                 .statusCode(OK.value())
                 .body("$", hasSize(1));
-
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .delete("/api/recipes/" + recipeId)
-                .then()
-                .log().all()
-                .statusCode(NO_CONTENT.value());
     }
 
     @Test
@@ -172,7 +141,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                 .id(this.currentRecipeId)
                 .title("a recipe title update")
                 .people(4)
-                .userId(null)
+                .userId(this.testUserId)
                 .steps(Arrays.asList("step one", "step two", "step three"))
                 .build();
 
