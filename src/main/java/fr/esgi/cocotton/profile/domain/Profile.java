@@ -1,6 +1,6 @@
 package fr.esgi.cocotton.profile.domain;
 
-import fr.esgi.cocotton.profile.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 
@@ -10,6 +10,8 @@ public class Profile {
     private String firstName;
     private String username;
     private String email;
+
+    @JsonIgnore
     private String password;
     private LocalDate birthDate;
 
