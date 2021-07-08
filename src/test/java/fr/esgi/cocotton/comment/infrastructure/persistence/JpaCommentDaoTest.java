@@ -23,7 +23,10 @@ public class JpaCommentDaoTest {
     private String currentCommentId;
     private final String userId = "userId";
 
-    Comment comment = Comment.builder().build();
+    Comment comment = Comment.builder()
+            .userId(userId)
+            .build();
+
     private final String content = "a comment content with bra";
     private final String censoredContent = "a comment content with ***";
 
@@ -39,6 +42,14 @@ public class JpaCommentDaoTest {
         assertThat(id).isNotNull();
         jpaCommentDao.deleteById(id);
     }
+
+    @Test
+    public void should_find_comment_by_id() {
+        Comment comment = jpaCommentDao.findById(this.currentCommentId).get();
+
+        assertThat(comment).isNotNull();
+        assertThat(comment.getId()).isEqualTo(this.currentCommentId);
+    }
     
     @Test
     public void should_save_comment_with_censored_content() {
@@ -51,13 +62,11 @@ public class JpaCommentDaoTest {
     @Test
     public void should_find_all_comments() {
         List<Comment> commentList = jpaCommentDao.findAll();
-        System.out.println(commentList.size());
         assertThat(commentList).hasSize(1);
     }
 
     @Test
     public void should_find_all_comments_by_user() {
-        List<Comment> commentListdd = jpaCommentDao.findAll();
         List<Comment> commentList = jpaCommentDao.findAllByUserId(this.userId);
         assertThat(commentList).hasSize(1);
     }
