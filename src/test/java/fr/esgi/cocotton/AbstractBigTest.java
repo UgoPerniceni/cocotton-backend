@@ -26,7 +26,6 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @ActiveProfiles("integration")
 @RunWith(SpringRunner.class)
-@TestPropertySource(locations="classpath:test.properties")
 @SpringBootTest(webEnvironment = DEFINED_PORT, properties = "server.port=8999")
 public abstract class AbstractBigTest {
 
