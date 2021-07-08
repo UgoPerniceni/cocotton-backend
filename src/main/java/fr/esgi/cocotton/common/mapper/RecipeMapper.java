@@ -13,6 +13,7 @@ public class RecipeMapper implements ObjectMapper<Recipe, JpaRecipe> {
                 jpaRecipe.getTitle(),
                 jpaRecipe.getPeople(),
                 jpaRecipe.getSteps(),
+                jpaRecipe.getIngredients(),
                 jpaRecipe.getUserId());
     }
 
@@ -22,6 +23,7 @@ public class RecipeMapper implements ObjectMapper<Recipe, JpaRecipe> {
                 recipe.getTitle(),
                 recipe.getPeople(),
                 recipe.getSteps(),
+                recipe.getIngredients(),
                 recipe.getUserId());
     }
 }

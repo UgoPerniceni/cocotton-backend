@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -13,13 +14,15 @@ public class Recipe {
     private String title;
     private int people;
     private List<String> steps;
+    private Set<String> ingredients;
     private String userId;
 
-    public Recipe(String id, String title, int people, List<String> steps, String userId) {
+    public Recipe(String id, String title, int people, List<String> steps, Set<String> ingredients, String userId) {
         this.id = id;
         this.title = title;
         this.people = people;
         this.steps = steps;
+        this.ingredients = ingredients;
         this.userId = userId;
     }
 
@@ -53,6 +56,14 @@ public class Recipe {
 
     public void setSteps(List<String> steps) {
         this.steps = steps;
+    }
+
+    public Set<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<String> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getUserId() {
