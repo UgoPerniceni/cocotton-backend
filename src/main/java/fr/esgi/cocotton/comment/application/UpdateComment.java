@@ -26,7 +26,6 @@ public class UpdateComment {
             patchComment =  commentDao.applyPatch(patch, patchComment);
             patchComment.setContent(censorComment(patchComment.getContent()));
         } catch (JsonPatchException | JsonProcessingException e) {
-            e.printStackTrace();
             return id;
         }
         return commentDao.save(patchComment);

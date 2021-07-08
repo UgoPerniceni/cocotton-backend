@@ -23,7 +23,6 @@ public class UpdateRecipe {
         try {
             patchRecipe =  recipeDao.applyPatch(patch, patchRecipe);
         } catch (JsonPatchException | JsonProcessingException e) {
-            e.printStackTrace();
             return id;
         }
         return recipeDao.save(patchRecipe);
