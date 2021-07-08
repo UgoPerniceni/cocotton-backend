@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
@@ -25,6 +26,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
             .title("a recipe title")
             .people(4)
             .steps(Arrays.asList("step one", "step two", "step three"))
+            .ingredients(Set.of("926105ee-a40f-4e92-b6aa-738824027889"))
             .build();
 
     @Before
@@ -141,6 +143,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                 .people(4)
                 .userId(this.testUserId)
                 .steps(Arrays.asList("step one", "step two", "step three"))
+                .ingredients(Set.of("926105ee-a40f-4e92-b6aa-738824027889"))
                 .build();
 
         given()
