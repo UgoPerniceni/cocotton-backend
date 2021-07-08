@@ -33,9 +33,9 @@ public class ProfileControllerBigTest extends AbstractBigTest {
     Profile profile = Profile.builder()
             .lastName("userlastName")
             .firstName("userfirstName")
-            .username("profileName")
+            .username("profileprofileName")
             .password("@_Strong-password01")
-            .email("testeur@mail.fr")
+            .email("testeur_profile@mail.fr")
             .birthDate(LocalDate.of(2011, 11, 11))
             .build();
 
@@ -182,7 +182,7 @@ public class ProfileControllerBigTest extends AbstractBigTest {
     }
 
     @Test
-    public void should_bad_request_when_get_profile_id_with_wrong_id() {
+    public void should_not_found_when_get_profile_id_with_wrong_id() {
         String wrongFileId = "impossible";
         given()
                 .headers(

@@ -105,8 +105,18 @@ public class ProfileApplicationTest {
         String id = addProfile.execute(this.mockProfile);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", this.token);
-        deleteProfileById.execute(id, headers);
-        assertThat(findProfileById.execute(id)).isNotNull();
+        try {
+            deleteProfileById.execute(id, headers);
+        } finally {
+            assertThat(findProfileById.execute(id)).isNotNull();
+            LoginDTO mockLoginDTO = LoginDTO.builder()
+                    .username(this.mockProfile.getUsername())
+                    .password(this.mockProfile.getPassword())
+                    .build();
+            String mockToken = login.execute(mockLoginDTO).get("Authorization").get(0);
+            headers.set("Authorization", mockToken);
+            deleteProfileById.execute(id, headers);
+        }
     }
 
     @Test(expected = ResourceNotFoundException.class)
@@ -128,5 +138,7 @@ public class ProfileApplicationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", this.token);
         deleteProfileById.execute(this.userId, headers);
+        List<Profile> profileList = findAllProfiles.execute();
+        assertThat(profileList).hasSize(0);
     }
 }
