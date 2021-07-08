@@ -1,8 +1,8 @@
 package fr.esgi.cocotton.recipe.infrastructure.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import fr.esgi.cocotton.recipe.application.*;
 import fr.esgi.cocotton.recipe.domain.Recipe;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.annotation.MatchesPattern;
 import java.net.URI;
 import java.util.List;
 
@@ -21,13 +22,15 @@ public class RecipeController {
     private final FindAllRecipesByUserId findAllRecipesByUserId;
     private final AddRecipe addRecipe;
     private final DeleteRecipeById deleteRecipeById;
+    private final UpdateRecipe updateRecipe;
 
-    public RecipeController(FindAllRecipes findAllRecipes, FindRecipeById findRecipeById, FindAllRecipesByUserId findAllRecipesByUserId, AddRecipe addRecipe, DeleteRecipeById deleteRecipeById) {
+    public RecipeController(FindAllRecipes findAllRecipes, FindRecipeById findRecipeById, FindAllRecipesByUserId findAllRecipesByUserId, AddRecipe addRecipe, DeleteRecipeById deleteRecipeById, UpdateRecipe updateRecipe) {
         this.findAllRecipes = findAllRecipes;
         this.findRecipeById = findRecipeById;
         this.findAllRecipesByUserId = findAllRecipesByUserId;
         this.addRecipe = addRecipe;
         this.deleteRecipeById = deleteRecipeById;
+        this.updateRecipe = updateRecipe;
     }
 
     @GetMapping("/api/recipes")
@@ -53,6 +56,16 @@ public class RecipeController {
                 .buildAndExpand(id)
                 .toUri();
 
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PatchMapping(path = "/api/recipes/{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<?> save(@PathVariable String id, @RequestBody JsonPatch patch) {
+        updateRecipe.execute(patch, id);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 
