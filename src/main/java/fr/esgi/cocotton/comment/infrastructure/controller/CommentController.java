@@ -1,7 +1,7 @@
 package fr.esgi.cocotton.comment.infrastructure.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import fr.esgi.cocotton.comment.application.*;
-import fr.esgi.cocotton.comment.domain.CensorCommentContent;
 import fr.esgi.cocotton.comment.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,18 +22,20 @@ public class CommentController {
     private final FindCommentById findCommentById;
     private final AddComment addComment;
     private final DeleteCommentById deleteCommentById;
+    private final UpdateComment updateComment;
 
     @Autowired
     public CommentController(FindAllComments findAllComments,
                              FindAllCommentsByUserId findAllCommentsByUserId,
                              FindCommentById findCommentById,
                              AddComment addComment,
-                             DeleteCommentById deleteCommentById) {
+                             DeleteCommentById deleteCommentById, UpdateComment updateComment) {
         this.findAllComments = findAllComments;
         this.findAllCommentsByUserId = findAllCommentsByUserId;
         this.findCommentById = findCommentById;
         this.addComment = addComment;
         this.deleteCommentById = deleteCommentById;
+        this.updateComment = updateComment;
     }
 
     @GetMapping
@@ -49,6 +51,16 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<Comment> findById(@PathVariable String id) {
         return new ResponseEntity<>(findCommentById.execute(id), HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<?> save(@PathVariable String id, @RequestBody JsonPatch patch) {
+        updateComment.execute(patch, id);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PostMapping

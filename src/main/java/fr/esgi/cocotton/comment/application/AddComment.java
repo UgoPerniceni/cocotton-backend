@@ -21,7 +21,7 @@ public class AddComment {
     }
 
     public String execute(Comment comment, String token) {
-            comment.setContent(censorComment(comment.getContent()));
+        comment.setContent(censorComment(comment.getContent()));
         Profile profile = findProfileFromToken.execute(token);
         comment.setUserId(profile.getId());
         return commentDao.save(comment);
