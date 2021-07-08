@@ -24,10 +24,12 @@ jobs:
     - stage: deploy
       name: "Deploy..."
       provider: elasticbeanstalk
+      script:
+        - ./mvnw clean package -DskipTests -P prod
       access_key_id:
-        secure: "Encrypted AKIAUONV2A6OXDMO2JCV"
+        secure: "Encrypted <access-key-id>=AKIAUONV2A6OXDMO2JCV"
       secret_access_key:
-        secure: "Encrypted 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"
+        secure: "Encrypted <secret-access-key>=/d4ZADyTldBNUP4LG+UrkvRMhUdbaGFXHVCQ3qfp"
       region: "us-east-2"
       app: "cocotton"
       env: "Cocotton-env"
