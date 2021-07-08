@@ -1,5 +1,6 @@
 package fr.esgi.cocotton.profile.infrastructure.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import fr.esgi.cocotton.profile.application.*;
 import fr.esgi.cocotton.profile.domain.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,15 @@ public class ProfileController {
     private final FindProfileById findProfileById;
     private final AddProfile addProfile;
     private final DeleteProfileById deleteProfileById;
+    private final UpdateProfile updateProfile;
 
     @Autowired
-    public ProfileController(FindAllProfiles findAllProfiles, FindProfileById findProfileById, AddProfile addProfile, DeleteProfileById deleteProfileById) {
+    public ProfileController(FindAllProfiles findAllProfiles, FindProfileById findProfileById, AddProfile addProfile, DeleteProfileById deleteProfileById, UpdateProfile updateProfile) {
         this.findAllProfiles = findAllProfiles;
         this.findProfileById = findProfileById;
         this.addProfile = addProfile;
         this.deleteProfileById = deleteProfileById;
+        this.updateProfile = updateProfile;
     }
 
     @GetMapping
@@ -47,6 +50,16 @@ public class ProfileController {
                 .buildAndExpand(id)
                 .toUri();
 
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<?> save(@PathVariable String id, @RequestBody JsonPatch patch) {
+        updateProfile.execute(patch, id);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 
