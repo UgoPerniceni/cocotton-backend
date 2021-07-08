@@ -12,6 +12,9 @@ public class Ingredient {
         this.category = category;
     }
 
+    public Ingredient() {
+    }
+
     public Ingredient(String name, Category category) {
         this.name = name;
         this.category = category;
