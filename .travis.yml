@@ -9,7 +9,7 @@ addons:
 
 jobs:
   include:
-    - stage:
+    - stage: test
       name: "Test"
       script:
         - ./mvnw clean test -Ptest
