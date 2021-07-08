@@ -23,7 +23,6 @@ public class UpdateIngredient {
         try {
             patchIngredient =  ingredientDao.applyPatch(patch, patchIngredient);
         } catch (JsonPatchException | JsonProcessingException e) {
-            e.printStackTrace();
             return id;
         }
         return ingredientDao.save(patchIngredient);
