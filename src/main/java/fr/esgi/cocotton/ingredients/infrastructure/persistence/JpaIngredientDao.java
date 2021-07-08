@@ -1,5 +1,10 @@
 package fr.esgi.cocotton.ingredients.infrastructure.persistence;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import fr.esgi.cocotton.ingredients.domain.Ingredient;
 import fr.esgi.cocotton.ingredients.domain.IngredientDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +46,12 @@ public class JpaIngredientDao implements IngredientDao {
     @Transactional
     public void deleteById(String id){
         repository.deleteById(id);
+    }
+
+    @Override
+    public Ingredient applyPatch(JsonPatch patch, Ingredient targetIngredient) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetIngredient, JsonNode.class));
+        return objectMapper.treeToValue(patched, Ingredient.class);
     }
 }
