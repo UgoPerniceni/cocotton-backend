@@ -1,5 +1,10 @@
 package fr.esgi.cocotton.comment.infrastructure.persistence;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import fr.esgi.cocotton.comment.domain.Comment;
 import fr.esgi.cocotton.comment.domain.CommentDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +57,10 @@ public class JpaCommentDao implements CommentDao {
         repository.deleteById(id);
     }
 
-//    @Override
-//    public String censorCommentContent(Comment comment) {
-//        return null;
-//    }
+    @Override
+    public Comment applyPatch(JsonPatch patch, Comment targetComment) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetComment, JsonNode.class));
+        return objectMapper.treeToValue(patched, Comment.class);
+    }
 }
