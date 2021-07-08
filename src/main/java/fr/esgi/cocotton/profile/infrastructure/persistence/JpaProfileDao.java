@@ -1,5 +1,11 @@
 package fr.esgi.cocotton.profile.infrastructure.persistence;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import fr.esgi.cocotton.common.mapper.ProfileMapper;
 import fr.esgi.cocotton.profile.domain.Profile;
 import fr.esgi.cocotton.profile.domain.ProfileDao;
@@ -55,5 +61,13 @@ public class JpaProfileDao implements ProfileDao {
     @Transactional
     public void deleteById(String id){
         repository.deleteById(id);
+    }
+
+    @Override
+    public Profile applyPatch(JsonPatch patch, Profile targetProfile) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetProfile, JsonNode.class));
+        return objectMapper.treeToValue(patched, Profile.class);
     }
 }

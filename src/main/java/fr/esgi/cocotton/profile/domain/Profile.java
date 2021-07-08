@@ -1,9 +1,17 @@
 package fr.esgi.cocotton.profile.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
+@Builder
 public class Profile {
     private String id;
     private String lastName;
@@ -13,6 +21,8 @@ public class Profile {
 
     @JsonIgnore
     private String password;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
 
     public Profile(String id, String lastName, String firstName, String username, String email, String password, LocalDate birthDate) {
