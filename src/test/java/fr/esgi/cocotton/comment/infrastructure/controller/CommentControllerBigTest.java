@@ -9,8 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.hasSize;
@@ -116,7 +114,7 @@ public class CommentControllerBigTest extends AbstractBigTest {
                 .as(Comment.class);
 
         Assert.assertNotEquals(this.comment.getContent(), fetchedComment.getContent());
-        Assert.assertEquals(fetchedComment.getContent(), this.censoredContent);
+        Assert.assertEquals(this.censoredContent, fetchedComment.getContent());
     }
 
     @Test

@@ -31,7 +31,7 @@ public class CensorCommentContent {
         ArrayList<String> bannedWords = retrieveBannedWordsFromFile("src/main/resources/censored-words.txt");
         for (String bannedWord : bannedWords) {
             String censor = new String(new char[bannedWord.length()]).replace('\0', '*');
-            content = content.replaceAll(bannedWord, censor);
+            content = content.replace(bannedWord, censor);
         }
         return content;
     }
