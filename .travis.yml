@@ -9,8 +9,12 @@ addons:
 
 jobs:
   include:
-    - stage: test
-      name: "Test..."
+    - stage:
+      name: "Test"
+      script:
+        - ./mvnw clean test -Ptest
+    - stage: coverage
+      name: "Coverage..."
       script:
         - ./mvnw clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=UgoPerniceni_cocotton-backend -Dsonar.login=${SONAR_TOKEN}
     - stage: build
