@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
-public class CommentControllerContent {
+public class CommentControllerTest {
     @InjectMocks
     CommentController commentController;
     @Mock
