@@ -198,7 +198,6 @@ public class CommentControllerBigTest extends AbstractBigTest {
                 .statusCode(NOT_FOUND.value());
     }
 
-    @Ignore
     @Test
     public void should_bad_request_when_delete_comment_by_id_with_wrong_id() {
         String wrongFileId = "impossible";
@@ -214,23 +213,6 @@ public class CommentControllerBigTest extends AbstractBigTest {
                 .statusCode(NOT_FOUND.value());
     }
 
-    @Ignore
-    @Test
-    public void should_bad_request_when_update_comment_by_id_with_wrong_id() {
-        String wrongFileId = "impossible";
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .post("/api/comments/" + wrongFileId)
-                .then()
-                .log().all()
-                .statusCode(NOT_FOUND.value());
-    }
-
-    @Ignore
     @Test
     public void should_bad_request_when_get_comment_by_user_id_with_wrong_id() {
         String wrongFileId = "impossible";
