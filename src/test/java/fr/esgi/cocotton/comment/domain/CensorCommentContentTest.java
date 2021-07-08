@@ -1,4 +1,4 @@
-package fr.esgi.cocotton.comment.infrastructure.controller;
+package fr.esgi.cocotton.comment.domain;
 
 import org.junit.Assert;
 import org.junit.Test;
