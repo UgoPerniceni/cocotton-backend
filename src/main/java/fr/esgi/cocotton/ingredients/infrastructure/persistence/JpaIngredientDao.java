@@ -23,13 +23,13 @@ public class JpaIngredientDao implements IngredientDao {
     public List<Ingredient> findAll(){
         return repository.findAll()
                 .stream()
-                .map(ingredient -> new Ingredient(ingredient.getName(), ingredient.getCategory()))
+                .map(ingredient -> new Ingredient(ingredient.getId(), ingredient.getName(), ingredient.getCategory()))
                 .collect(Collectors.toList());
     }
 
     public Optional<Ingredient> findById(String id){
         Optional<JpaIngredient> jpaIngredient = repository.findById(id);
-        return jpaIngredient.map(ingredient -> new Ingredient(ingredient.getName(), ingredient.getCategory()));
+        return jpaIngredient.map(ingredient -> new Ingredient(ingredient.getId(), ingredient.getName(), ingredient.getCategory()));
     }
 
     public String save(Ingredient ingredient){
