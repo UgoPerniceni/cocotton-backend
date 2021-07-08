@@ -20,7 +20,7 @@ jobs:
     - stage: build
       name: "Build..."
       script:
-        - ./mvnw clean package -DskipTests
+        - ./mvnw clean package -DskipTests -P prod
     - stage: deploy
       name: "Deploy..."
       provider: elasticbeanstalk
