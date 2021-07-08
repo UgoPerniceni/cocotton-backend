@@ -1,41 +1,37 @@
-package fr.esgi.cocotton.recipe.infrastructure.controller;
+package fr.esgi.cocotton.comment.infrastructure.controller;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import fr.esgi.cocotton.AbstractBigTest;
-import fr.esgi.cocotton.recipe.domain.Recipe;
+import fr.esgi.cocotton.comment.domain.Comment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.Set;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.HttpStatus.*;
 
-public class RecipeControllerBigTest extends AbstractBigTest {
+public class CommentControllerBigTest extends AbstractBigTest {
 
     private String token;
     private String testUserId;
-    private String currentRecipeId;
-    private Recipe recipe = Recipe.builder()
-            .title("a recipe title")
-            .people(4)
-            .steps(Arrays.asList("step one", "step two", "step three"))
-            .ingredients(Set.of("926105ee-a40f-4e92-b6aa-738824027889"))
-            .build();
+    private String currentCommentId;
+    private final String content = "a comment content with bra";
+    private final String censoredContent = "a comment content with ***";
+
+    private Comment comment = Comment.builder().build();
 
     @Before
     public void init() {
+        this.comment.setContent(this.content);
         this.testUserId = registerTestUser();
         this.token = tokenProvider();
-        recipe.setUserId(this.testUserId);
+        comment.setUserId(this.testUserId);
 
-        this.currentRecipeId = given()
+        this.currentCommentId = given()
                 .headers(
                         "Authorization",
                         this.token,
@@ -45,16 +41,16 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         ContentType.JSON
                 )
                 .contentType(JSON)
-                .body(toJson(recipe))
+                .body(toJson(comment))
                 .when()
-                .post("/api/recipes")
+                .post("/api/comments")
                 .getHeader("Location")
-                .split("recipes/")[1];
+                .split("comments/")[1];
     }
 
     @Test
-    public void should_create_1_recipe() {
-        String recipeId = given()
+    public void should_create_1_comment() {
+        String commentId = given()
                 .headers(
                         "Authorization",
                         this.token,
@@ -64,14 +60,14 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         ContentType.JSON
                 )
                 .contentType(JSON)
-                .body(toJson(this.recipe))
+                .body(toJson(this.comment))
                 .when()
-                .post("/api/recipes")
+                .post("/api/comments")
                 .then()
                 .log().all()
                 .statusCode(CREATED.value())
                 .extract().header("Location")
-                .split("recipes/")[1];
+                .split("comments/")[1];
 
         given()
                 .headers(
@@ -79,41 +75,57 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .delete("/api/recipes/" + recipeId)
+                .delete("/api/comments/" + commentId)
                 .then()
                 .log().all()
                 .statusCode(NO_CONTENT.value());
     }
 
     @Test
-    public void should_get_1_recipe_by_id() {
-        Recipe fetchedRecipe = given()
+    public void should_get_1_comment_by_id() {
+        Comment fetchedComment = given()
                 .headers(
                         "Authorization",
                         this.token
                 )
                 .when()
-                .get("/api/recipes/" + this.currentRecipeId)
+                .get("/api/comments/" + this.currentCommentId)
                 .then()
                 .log().all()
                 .statusCode(OK.value())
                 .extract()
-                .as(Recipe.class);
-
-        this.recipe.setId(this.currentRecipeId);
-
-        Assert.assertEquals(this.recipe, fetchedRecipe);
+                .as(Comment.class);
+        Assert.assertNotNull(fetchedComment);
     }
 
     @Test
-    public void should_get_1_recipe_by_user_id() {
+    public void should_get_1_comment_by_id_with_censured_content() {
+        Comment fetchedComment = given()
+                .headers(
+                        "Authorization",
+                        this.token
+                )
+                .when()
+                .get("/api/comments/" + this.currentCommentId)
+                .then()
+                .log().all()
+                .statusCode(OK.value())
+                .extract()
+                .as(Comment.class);
+
+        Assert.assertNotEquals(this.comment.getContent(), fetchedComment.getContent());
+        Assert.assertEquals(this.censoredContent, fetchedComment.getContent());
+    }
+
+    @Test
+    public void should_get_1_comment_by_user_id() {
         given()
                 .headers(
                         "Authorization",
                         this.token
                 )
                 .when()
-                .get("/api/recipes/profiles/" + this.testUserId)
+                .get("/api/comments/profiles/" + this.testUserId)
                 .then()
                 .log().all()
                 .statusCode(OK.value())
@@ -121,14 +133,14 @@ public class RecipeControllerBigTest extends AbstractBigTest {
     }
 
     @Test
-    public void should_get_list_of_1_recipe() {
+    public void should_get_list_of_1_comment() {
         given()
                 .headers(
                         "Authorization",
                         this.token
                 )
                 .when()
-                .get("/api/recipes/")
+                .get("/api/comments/")
                 .then()
                 .log().all()
                 .statusCode(OK.value())
@@ -136,14 +148,11 @@ public class RecipeControllerBigTest extends AbstractBigTest {
     }
 
     @Test
-    public void should_update_recipe() {
-        Recipe updateRecipe = Recipe.builder()
-                .id(this.currentRecipeId)
-                .title("a recipe title update")
-                .people(4)
+    public void should_update_comment() {
+        Comment updateComment = Comment.builder()
+                .id(this.currentCommentId)
+                .content(this.censoredContent + "update")
                 .userId(this.testUserId)
-                .steps(Arrays.asList("step one", "step two", "step three"))
-                .ingredients(Set.of("926105ee-a40f-4e92-b6aa-738824027889"))
                 .build();
 
         given()
@@ -156,28 +165,29 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         ContentType.JSON
                 )
                 .contentType(JSON)
-                .body(toJson(updateRecipe))
+                .body(toJson(updateComment))
                 .when()
-                .post("/api/recipes")
+                .post("/api/comments")
                 .then()
                 .log().all()
                 .statusCode(CREATED.value());
 
-        Recipe fetchedRecipe = given()
+        Comment fetchedComment = given()
                 .headers(
                         "Authorization",
                         this.token
                 )
                 .when()
-                .get("/api/recipes/" + this.currentRecipeId)
+                .get("/api/comments/" + this.currentCommentId)
                 .then()
                 .extract()
-                .as(Recipe.class);
-        Assert.assertEquals(updateRecipe, fetchedRecipe);
+                .as(Comment.class);
+
+        Assert.assertEquals(updateComment, fetchedComment);
     }
 
     @Test
-    public void should_bad_request_when_get_recipe_by_id_with_wrong_id() {
+    public void should_bad_request_when_get_comment_by_id_with_wrong_id() {
         String wrongFileId = "impossible";
         given()
                 .headers(
@@ -185,14 +195,14 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .get("/api/v1/recipes/" + wrongFileId)
+                .get("/api/v1/comments/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
     }
 
     @Test
-    public void should_bad_request_when_delete_recipe_by_id_with_wrong_id() {
+    public void should_bad_request_when_delete_comment_by_id_with_wrong_id() {
         String wrongFileId = "impossible";
         given()
                 .headers(
@@ -200,14 +210,14 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .delete("/api/v1/recipes/" + wrongFileId)
+                .delete("/api/v1/comments/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
     }
 
     @Test
-    public void should_bad_request_when_update_recipe_by_id_with_wrong_id() {
+    public void should_bad_request_when_update_comment_by_id_with_wrong_id() {
         String wrongFileId = "impossible";
         given()
                 .headers(
@@ -215,14 +225,14 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .post("/api/v1/recipes/" + wrongFileId)
+                .post("/api/v1/comments/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
     }
 
     @Test
-    public void should_bad_request_when_get_recipe_by_user_id_with_wrong_id() {
+    public void should_bad_request_when_get_comment_by_user_id_with_wrong_id() {
         String wrongFileId = "impossible";
         given()
                 .headers(
@@ -230,7 +240,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .post("/api/v1/recipes/profiles/" + wrongFileId)
+                .post("/api/v1/comments/profiles/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
@@ -244,7 +254,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .get("/api/recipes/");
+                .get("/api/comments/");
 
         given()
                 .headers(
@@ -252,11 +262,12 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .delete("/api/recipes/" + this.currentRecipeId)
+                .delete("/api/comments/" + this.currentCommentId)
                 .then()
                 .log().all()
                 .statusCode(NO_CONTENT.value());
 
         deleteTestUser(this.testUserId, this.token);
     }
+
 }

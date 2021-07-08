@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static fr.esgi.cocotton.comment.domain.CensorCommentContent.censorComment;
+
 @Repository
 public class JpaCommentDao implements CommentDao {
 
@@ -42,6 +44,7 @@ public class JpaCommentDao implements CommentDao {
 
     @Override
     public String save(Comment comment) {
+        comment.setContent(censorComment(comment.getContent()));
         JpaComment jpaComment = new JpaComment(comment.getId(), comment.getContent(), comment.getUserId());
         repository.save(jpaComment);
         return jpaComment.getId();
@@ -51,9 +54,4 @@ public class JpaCommentDao implements CommentDao {
     public void deleteById(String id) {
         repository.deleteById(id);
     }
-
-//    @Override
-//    public String censorCommentContent(Comment comment) {
-//        return null;
-//    }
 }
