@@ -203,38 +203,6 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                 .statusCode(NOT_FOUND.value());
     }
 
-    @Ignore
-    @Test
-    public void should_bad_request_when_update_recipe_by_id_with_wrong_id() {
-        String wrongFileId = "impossible";
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .post("/api/recipes/" + wrongFileId)
-                .then()
-                .log().all()
-                .statusCode(NOT_FOUND.value());
-    }
-
-    @Ignore
-    @Test
-    public void should_bad_request_when_get_recipe_by_user_id_with_wrong_id() {
-        String wrongFileId = "impossible";
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .post("/api/recipes/profiles/" + wrongFileId)
-                .then()
-                .log().all()
-                .statusCode(NOT_FOUND.value());
-    }
-
     @After
     public void clear() {
         Response response = given()
