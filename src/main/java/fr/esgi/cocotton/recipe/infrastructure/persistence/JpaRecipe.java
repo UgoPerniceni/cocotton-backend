@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "recipe")
 public class JpaRecipe {
@@ -27,15 +28,19 @@ public class JpaRecipe {
     @ElementCollection
     private List<String> steps;
 
+    @ElementCollection
+    private Set<String> ingredients;
+
     private String userId;
 
     public JpaRecipe(){}
 
-    public JpaRecipe(String id, String title, int people, List<String> steps, String userId) {
+    public JpaRecipe(String id, String title, int people, List<String> steps, Set<String> ingredients, String userId) {
         this.id = id;
         this.title = title;
         this.people = people;
         this.steps = steps;
+        this.ingredients = ingredients;
         this.userId = userId;
     }
 
@@ -69,6 +74,14 @@ public class JpaRecipe {
 
     public void setSteps(List<String> steps) {
         this.steps = steps;
+    }
+
+    public Set<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<String> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getUserId() {
