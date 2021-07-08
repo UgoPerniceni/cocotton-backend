@@ -1,9 +1,7 @@
 package fr.esgi.cocotton.ingredients.infrastructure.controller;
 
-import fr.esgi.cocotton.ingredients.application.AddIngredient;
-import fr.esgi.cocotton.ingredients.application.DeleteIngredient;
-import fr.esgi.cocotton.ingredients.application.FindAllIngredients;
-import fr.esgi.cocotton.ingredients.application.FindIngredientById;
+import com.github.fge.jsonpatch.JsonPatch;
+import fr.esgi.cocotton.ingredients.application.*;
 import fr.esgi.cocotton.ingredients.application.dto.IngredientDTO;
 import fr.esgi.cocotton.ingredients.domain.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +22,15 @@ public class IngredientController {
     private final FindIngredientById findIngredientById;
     private final AddIngredient addIngredient;
     private final DeleteIngredient deleteIngredient;
+    private final UpdateIngredient updateIngredient;
 
     @Autowired
-    private IngredientController(FindAllIngredients findAllIngredients, FindIngredientById findIngredientById, AddIngredient addIngredient, DeleteIngredient deleteIngredient){
+    private IngredientController(FindAllIngredients findAllIngredients, FindIngredientById findIngredientById, AddIngredient addIngredient, DeleteIngredient deleteIngredient, UpdateIngredient updateIngredient){
         this.findAllIngredients = findAllIngredients;
         this.findIngredientById = findIngredientById;
         this.addIngredient = addIngredient;
         this.deleteIngredient = deleteIngredient;
+        this.updateIngredient = updateIngredient;
     }
 
     @GetMapping
@@ -41,6 +41,16 @@ public class IngredientController {
     @GetMapping("/{id}")
     public ResponseEntity<Ingredient> findById(@PathVariable String id){
         return new ResponseEntity<>(findIngredientById.execute(id), HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<?> save(@PathVariable String id, @RequestBody JsonPatch patch) {
+        updateIngredient.execute(patch, id);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PostMapping
