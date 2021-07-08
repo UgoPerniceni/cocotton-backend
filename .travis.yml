@@ -23,8 +23,13 @@ jobs:
         - ./mvnw clean package -DskipTests
     - stage: deploy
       name: "Deploy..."
-      provider: gae
-      keyfile: ./cocotton-api-7cad61f97f44.json
-      project: "cocotton-api"
-      script:
-        - ./mvnw appengine:deploy -P cloud-gcp
+      provider: elasticbeanstalk
+      access_key_id:
+        secure: "Encrypted AKIAUONV2A6OXDMO2JCV"
+      secret_access_key:
+        secure: "Encrypted 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"
+      region: "us-east-2"
+      app: "cocotton"
+      env: "Cocotton-env"
+      zip_file: target/cocotton-backend-0.0.1-SNAPSHOT.jar
+      bucket_name: "elasticbeanstalk-us-east-2-305860839325"
