@@ -24,6 +24,7 @@ jobs:
     - stage: deploy
       name: "Deploy..."
       provider: elasticbeanstalk
+      install: true
       script:
         - ./mvnw clean package -DskipTests -P prod
       access_key_id:
@@ -32,6 +33,6 @@ jobs:
         secure: "Encrypted <secret-access-key>=/d4ZADyTldBNUP4LG+UrkvRMhUdbaGFXHVCQ3qfp"
       region: "us-east-2"
       app: "cocotton"
-      env: "Cocotton-env"
+      env: Cocotton-env
       zip_file: target/cocotton-backend-0.0.1-SNAPSHOT.jar
       bucket_name: "elasticbeanstalk-us-east-2-305860839325"
