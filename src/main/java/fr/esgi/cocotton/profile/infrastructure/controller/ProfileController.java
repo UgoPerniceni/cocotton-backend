@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -20,13 +21,15 @@ public class ProfileController {
     private final FindProfileById findProfileById;
     private final AddProfile addProfile;
     private final DeleteProfileById deleteProfileById;
+    private final FindProfileFromToken findProfileFromToken;
 
     @Autowired
-    public ProfileController(FindAllProfiles findAllProfiles, FindProfileById findProfileById, AddProfile addProfile, DeleteProfileById deleteProfileById) {
+    public ProfileController(FindAllProfiles findAllProfiles, FindProfileById findProfileById, AddProfile addProfile, DeleteProfileById deleteProfileById, FindProfileFromToken findProfileFromToken) {
         this.findAllProfiles = findAllProfiles;
         this.findProfileById = findProfileById;
         this.addProfile = addProfile;
         this.deleteProfileById = deleteProfileById;
+        this.findProfileFromToken = findProfileFromToken;
     }
 
     @GetMapping
@@ -37,6 +40,12 @@ public class ProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<Profile> findById(@PathVariable String id){
         return new ResponseEntity<>(findProfileById.execute(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/token")
+    public ResponseEntity<Profile> findByToken(@RequestHeader HttpHeaders headers){
+        String token = Objects.requireNonNull(headers.getFirst("Authorization"));
+        return new ResponseEntity<>(findProfileFromToken.execute(token), HttpStatus.OK);
     }
 
     @PostMapping
