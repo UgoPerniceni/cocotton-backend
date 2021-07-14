@@ -4,10 +4,7 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import fr.esgi.cocotton.AbstractBigTest;
 import fr.esgi.cocotton.recipe.domain.Recipe;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -185,7 +182,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .get("/api/v1/recipes/" + wrongFileId)
+                .get("/api/recipes/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
@@ -200,37 +197,7 @@ public class RecipeControllerBigTest extends AbstractBigTest {
                         this.token
                 )
                 .when()
-                .delete("/api/v1/recipes/" + wrongFileId)
-                .then()
-                .log().all()
-                .statusCode(NOT_FOUND.value());
-    }
-
-    @Test
-    public void should_bad_request_when_update_recipe_by_id_with_wrong_id() {
-        String wrongFileId = "impossible";
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .post("/api/v1/recipes/" + wrongFileId)
-                .then()
-                .log().all()
-                .statusCode(NOT_FOUND.value());
-    }
-
-    @Test
-    public void should_bad_request_when_get_recipe_by_user_id_with_wrong_id() {
-        String wrongFileId = "impossible";
-        given()
-                .headers(
-                        "Authorization",
-                        this.token
-                )
-                .when()
-                .post("/api/v1/recipes/profiles/" + wrongFileId)
+                .delete("/api/recipes/" + wrongFileId)
                 .then()
                 .log().all()
                 .statusCode(NOT_FOUND.value());
