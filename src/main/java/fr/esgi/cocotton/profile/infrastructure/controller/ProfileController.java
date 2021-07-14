@@ -43,7 +43,7 @@ public class ProfileController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<Profile> findByUsername(@RequestHeader HttpHeaders headers){
+    public ResponseEntity<Profile> findByToken(@RequestHeader HttpHeaders headers){
         String token = Objects.requireNonNull(headers.getFirst("Authorization"));
         return new ResponseEntity<>(findProfileFromToken.execute(token), HttpStatus.OK);
     }
